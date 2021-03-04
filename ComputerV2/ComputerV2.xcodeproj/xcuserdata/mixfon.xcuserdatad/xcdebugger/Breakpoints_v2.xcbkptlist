@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "98133BD9-8C70-4E3B-9AC0-C5D1C0CE3E69"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "33460035-A386-4BB9-AF17-D1BB6A61BB5A"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ComputerV2/Computer.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
+            landmarkName = "checkErrors(line:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "33460035-A386-4BB9-AF17-D1BB6A61BB5A - 8af2c45d013089cf"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ComputerV2.Computer.(checkErrors in _476C2056CF55E6165876D551E0977772)(line: Swift.String) -&gt; Swift.Bool"
+                  moduleName = "ComputerV2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mixfon/MyFiles/Swift/ComputerV2/ComputerV2/ComputerV2/Computer.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "28"
+                  endingLineNumber = "28"
+                  offsetFromSymbolStart = "261">
+               </Location>
+               <Location
+                  uuid = "33460035-A386-4BB9-AF17-D1BB6A61BB5A - 6a792f2ceaa04c34"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Character) -&gt; Swift.Bool in ComputerV2.Computer.(checkErrors in _476C2056CF55E6165876D551E0977772)(line: Swift.String) -&gt; Swift.Bool"
+                  moduleName = "ComputerV2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mixfon/MyFiles/Swift/ComputerV2/ComputerV2/ComputerV2/Computer.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "28"
+                  endingLineNumber = "28"
+                  offsetFromSymbolStart = "23">
+               </Location>
+               <Location
+                  uuid = "33460035-A386-4BB9-AF17-D1BB6A61BB5A - 2a622388dfa7e284"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (Swift.Substring) -&gt; Swift.String in ComputerV2.Computer.(checkErrors in _476C2056CF55E6165876D551E0977772)(line: Swift.String) -&gt; Swift.Bool"
+                  moduleName = "ComputerV2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mixfon/MyFiles/Swift/ComputerV2/ComputerV2/ComputerV2/Computer.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "28"
+                  endingLineNumber = "28"
+                  offsetFromSymbolStart = "35">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A2018BD9-6169-4A00-95C9-33C4917986B3"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ComputerV2/Computer.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
+            landmarkName = "conversionPostfixForm(line:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "47FD9987-BCE6-4A8D-9D7C-664B988C59F4"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ComputerV2/Checker.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
+            landmarkName = "checkLine(line:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8E7FBA91-037E-4A6B-97F4-CF0CE63DEFBC"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ComputerV2/Checker.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "52"
+            endingLineNumber = "52"
+            landmarkName = "checkLine(line:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
