@@ -21,7 +21,7 @@ class Computer {
             if lineWithoutSpace.isEmpty { continue }
             if lineWithoutSpace == "exit" { exit(0) }
             if !checkErrors(line: lineWithoutSpace) { continue }
-            conversionPostfixForm(line: lineWithoutSpace)
+            _ = conversionPostfixForm(line: lineWithoutSpace)
             print(lineWithoutSpace)
         }
     }
@@ -59,9 +59,15 @@ class Computer {
             let char = stack.popLast()!
             postfixForm += String(char) + " "
         }
-        print(lineSpace)
-        print(postfixForm)
-        return ""
+        //print(lineSpace)
+        //print(postfixForm)
+        return String(postfixForm.dropLast())
+    }
+    
+    // MARK: Вычисление значения из выражения в обратной польской нотоции.
+    
+    func calculateValue(line: String) -> Double {
+        return 0
     }
     
     // MARK: Добавляет пробелы слева и справа от +-*/%()^
@@ -77,6 +83,7 @@ class Computer {
         return string
     }
     
+    // MARK: Проверка входной строки на ошибки синтаксиса и правельности растановки скобок.
     private func checkErrors(line: String) -> Bool {
         let checker = Checker()
         do {
@@ -94,6 +101,7 @@ class Computer {
         return true
     }
     
+    // MARK: Вывод сообщения об ошибке в поток ошибок.
     private func systemError(massage: String) {
         fputs(massage + "\n", stderr)
     }
