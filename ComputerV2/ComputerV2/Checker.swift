@@ -21,14 +21,14 @@ class Checker {
     }
     
     // MARK: Проверяем прально ли раставлены скобки
-    func checkBreckets(line: String) throws {
+    func checkBreckets(line: String, breckets: String) throws {
         let error = "The brackets are placed incorrectly."
         var stack: String = ""
         for char in line {
-            if char == "(" {
+            if char == breckets.first {
                 stack.append(char)
             }
-            else if char == ")" {
+            else if char == breckets.last {
                 if stack.isEmpty {
                     throw Exception(massage: error)
                 } else {

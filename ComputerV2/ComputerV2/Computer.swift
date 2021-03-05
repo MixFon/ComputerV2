@@ -29,7 +29,7 @@ class Computer {
     func conversionPostfixForm(line: String) -> String {
         let lineSpace = addSpace(line: line).split() { $0 == " "}.map{ String($0) }
         //print(addSpace(line: line))
-        let prioritySign = ["(": 0, ")": 1, "+": 2, "-": 2, "*": 3, "/": 3, "^": 3, "%": 3]
+        let prioritySign = ["(": 0, ")": 1, "+": 2, "-": 2, "*": 3, "/": 3, "%": 3, "^": 4]
         var postfixForm: String = String()
         var stack: String = String()
         for elem in lineSpace {
@@ -84,7 +84,8 @@ class Computer {
             let leftRieght = line.split(){ $0 == "=" }.map{ String($0) }
             for lr in leftRieght {
                 try checker.checkLine(line: lr)
-                try checker.checkBreckets(line: lr)
+                try checker.checkBreckets(line: lr, breckets: "()")
+                try checker.checkBreckets(line: lr, breckets: "[]")
             }
         } catch let exception as Exception {
             systemError(massage: exception.massage)
