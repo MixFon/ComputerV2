@@ -21,13 +21,13 @@ class Computer {
             if lineWithoutSpace.isEmpty { continue }
             if lineWithoutSpace == "exit" { exit(0) }
             if !checkErrors(line: lineWithoutSpace) { continue }
-            _ = conversionPostfixForm(line: lineWithoutSpace)
+            _ = conversionPostfixForm(infixFomr: lineWithoutSpace)
             print(lineWithoutSpace)
         }
     }
     
-    func conversionPostfixForm(line: String) -> String {
-        let lineSpace = addSpace(line: line).split() { $0 == " "}.map{ String($0) }
+    func conversionPostfixForm(infixFomr: String) -> String {
+        let lineSpace = addSpace(line: infixFomr).split() { $0 == " "}.map{ String($0) }
         //print(addSpace(line: line))
         let prioritySign = ["(": 0, ")": 1, "+": 2, "-": 2, "*": 3, "/": 3, "%": 3, "^": 4]
         var postfixForm: String = String()
@@ -65,9 +65,45 @@ class Computer {
     }
     
     // MARK: Вычисление значения из выражения в обратной польской нотоции.
-    
-    func calculateValue(line: String) -> Double {
-        return 0
+    func calculateValue(postfixForm: String) throws -> Double {
+        var stack = [String]()
+        let elements = postfixForm.split() { $0 == " "}.map{ String($0) }
+        for element in elements {
+            if "*/^+-".contains(element) {
+                guard let secondValue = stack.popLast(), let firstValue = stack.popLast() else {
+                    throw Exception(massage: "Invalid operand.")
+                }
+                let first = Double(firstValue)!
+                let second = Double(secondValue)!
+                var temp = Double()
+                switch element {
+                case "+":
+                    temp = first + second
+                case "-":
+                    temp = first - second
+                case "*":
+                    temp = first * second
+                case "/":
+                    if second == 0 {
+                        throw Exception(massage: "Division by zero.")
+                    }
+                    temp = first / second
+                //case "%":
+                //    temp = first % second
+                case "^":
+                    temp = pow(first, second)
+                default:
+                    break
+                }
+                stack.append(String(temp))
+            } else {
+                stack.append(element)
+            }
+        }
+        guard let last = stack.popLast(), let result = Double(last) else {
+            throw Exception(massage: "Invalid operand.")
+        }
+        return result
     }
     
     // MARK: Добавляет пробелы слева и справа от +-*/%()^
