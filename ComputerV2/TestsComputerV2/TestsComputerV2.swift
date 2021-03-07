@@ -33,7 +33,6 @@ class TestsComputerV2: XCTestCase {
         for elem in testDict {
             XCTAssertEqual(computer.conversionPostfixForm(infixFomr: elem.key), elem.value)
         }
-        
     }
 
     func testCalculateDoubleValue() throws {
@@ -66,7 +65,11 @@ class TestsComputerV2: XCTestCase {
             "+++".removeWhitespace(),
             "+".removeWhitespace(),
             "++".removeWhitespace(),
-            "34 / 0".removeWhitespace()
+            "34 / 0".removeWhitespace(),
+            "2+ 3 *3**4".removeWhitespace(),
+            "2+-3*3*4".removeWhitespace(),
+            "2--3^3**4".removeWhitespace(),
+            "2+3*3+(4 + 4/0)".removeWhitespace()
         ]
         for elem in testString {
             let posfixForm = computer.conversionPostfixForm(infixFomr: elem)
