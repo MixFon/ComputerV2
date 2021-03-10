@@ -7,68 +7,56 @@
 
 import Foundation
 
-class Rational: NSObject{
-    var numerator: Int64
-    var denominator: Int64
+class Rational: NSObject {
     
-    var decimalView: Double { return Double(numerator) / Double(denominator) }
-    var rationalView: String { return "\(numerator) / \(denominator))"}
-    
-    override var description: String { return "\(numerator) / \(denominator))"}
+    var rational: Double
     
     override init() {
-        self.numerator = 0
-        self.denominator = 1
+        self.rational = 0
     }
     
-    convenience init(numeratorInt: Int64, denominatorInt: Int64) throws {
-        if denominatorInt == 0 {
-            throw Exception(massage: "Division by zero. Denominator mast not be zero.")
-        }
-        self.init()
-        self.reduceFraction(numerator: numeratorInt, denominator: denominatorInt)
-    }
+    override var description: String {return "\(rational)"}
     
     // MARK: Конструктор копирования
-    convenience init(other: Rational) {
-        self.init()
-        self.reduceFraction(numerator: other.numerator, denominator: other.denominator)
-    }
-    
-    // MARK: Конструктор с рациональным аргкментом.
-    convenience init(_ doubleValue: Double, withPrecision eps: Double = 1.0E-10) {
-        var x = doubleValue
-        var a = x.rounded(.down)
-        var (h1, k1, h, k) = (Int64(1), Int64(0), Int64(a), Int64(1))
-        while x - a > eps * Double(k) * Double(k) {
-            x = 1.0/(x - a)
-            a = x.rounded(.down)
-            (h1, k1, h, k) = (h, k, h1 + Int64(a) * h, k1 + Int64(a) * k)
-        }
-        try! self.init(numeratorInt: h, denominatorInt: k)
+    init(other: Rational) {
+        self.rational = other.rational
     }
     
     // MARK: Конструктор с целым параметром.
-    init(_ intValue: Int64) {
-        self.numerator = intValue
-        self.denominator = 1
+    init(_ rational: Double) {
+        self.rational = rational
+    }
+    
+    // MARK: Возвращает число в виде дроби с числителем и знаменателем
+     func getNumeratorDenuminator(_ doubleValue: Double, withPrecision eps: Double = 1.0E-10) -> (Int, Int) {
+        var x = doubleValue
+        var a = x.rounded(.down)
+        var (h1, k1, h, k) = (1, 0, Int(a), 1)
+        while x - a > eps * Double(k) * Double(k) {
+            x = 1.0/(x - a)
+            a = x.rounded(.down)
+            (h1, k1, h, k) = (h, k, h1 + Int(a) * h, k1 + Int(a) * k)
+        }
+        (h, k) = reduceFraction(numerator: h, denominator: k)
+        return (h, k)
     }
     
     // MARK: Сокращает дробь.
-    private func reduceFraction(numerator: Int64, denominator: Int64) {
+    private func reduceFraction(numerator: Int, denominator: Int) -> (Int, Int) {
         let sign = Double(numerator) / Double(denominator)
-        self.numerator = abs(numerator)
-        self.denominator = abs(denominator)
-        let nod = nodNunbers(one: self.numerator, two: self.denominator)
-        self.numerator /= nod
-        self.denominator /= nod
+        var num = abs(numerator)
+        var den = abs(denominator)
+        let nod = nodNunbers(one: numerator, two: denominator)
+        num /= nod
+        den /= nod
         if sign < 0 {
-            self.numerator = -self.numerator
+            num = -num
         }
+        return (num, den)
     }
     
     // MARK: Определение наименьшего общего делителя.
-    private func nodNunbers(one: Int64, two: Int64) -> Int64 {
+    private func nodNunbers(one: Int, two: Int) -> Int {
         var a = one
         var b = two
         while (a != 0 && b != 0) {
@@ -83,81 +71,48 @@ class Rational: NSObject{
 }
 
 func + (left: Rational, right: Rational) -> Rational {
-    let res = Rational(left.decimalView + right.decimalView)
-    //let numerator = right.denominator * left.numerator + left.denominator * right.numerator
-    //let denominater = left.denominator * right.denominator
-    //return try! Rational(numeratorInt: numerator, denominatorInt: denominater)
-    return res
+    return Rational(left.rational + right.rational)
 }
 
 func - (left: Rational, right: Rational) -> Rational {
-    let res = Rational(left.decimalView - right.decimalView)
-    //let numerator = right.denominator * left.numerator - left.denominator * right.numerator
-    //let denominater = left.denominator * right.denominator
-    //return try! Rational(numeratorInt: numerator, denominatorInt: denominater)
-    return res
+    return Rational(left.rational - right.rational)
 }
 
 func * (left: Rational, right: Rational) -> Rational {
-    let res = Rational(left.decimalView * right.decimalView)
-//    let numerator = left.numerator * right.numerator
-//    let denominater = left.denominator * right.denominator
-//    return try! Rational(numeratorInt: numerator, denominatorInt: denominater)
-    return res
+    return Rational(left.rational * right.rational)
 }
 
 func / (left: Rational, right: Rational) throws -> Rational {
-    if right.numerator == 0 {
+    if right.rational == 0 {
         throw Exception(massage: "Division by zero.")
     }
-    let res = Rational(left.decimalView / right.decimalView)
-//    let numerator = left.numerator * right.denominator
-//    let denominater = left.denominator * right.numerator
-//    return try! Rational(numeratorInt: numerator, denominatorInt: denominater)
-    return res
+    return Rational(left.rational / right.rational)
 }
 
 func % (left: Rational, right: Rational) throws -> Rational {
-    if right.numerator == 0 {
+    if right.rational == 0 {
         throw Exception(massage: "Division by zero.")
     }
-    let integer = try! left / right
-    let temp = Double(integer.numerator / integer.denominator).rounded(.down)
-    let rez = left - (try! Rational(numeratorInt: Int64(temp) * right.numerator, denominatorInt: right.denominator))
-    return rez
+    return Rational(left.rational.truncatingRemainder(dividingBy: right.rational))
 }
 
 infix operator ^
-func ^ (rational: Rational, power: Rational) throws -> Rational {
-    if power.denominator != 1 {
-        throw Exception(massage: "The degree in not an integer.")
-    }
-    let numerator = pow(Decimal(rational.numerator), Int(power.numerator))
-    let denominator = pow(Decimal(rational.denominator), Int(power.numerator))
-    return try! Rational(numeratorInt: NSDecimalNumber(decimal: numerator).int64Value,
-                         denominatorInt: NSDecimalNumber(decimal: denominator).int64Value)
+func ^ (number: Rational, power: Rational) -> Rational {
+    return Rational(pow(number.rational, power.rational))
 }
 
-func ^ (rational: Rational, power: Int64) -> Rational {
-    let numerator = pow(Decimal(rational.numerator), Int(power))
-    let denominator = pow(Decimal(rational.denominator), Int(power))
-    return try! Rational(numeratorInt: NSDecimalNumber(decimal: numerator).int64Value,
-                         denominatorInt: NSDecimalNumber(decimal: denominator).int64Value)
+func ^ (number: Rational, power: Double) -> Rational {
+    return Rational(pow(number.rational, power))
 }
 
 func == (left: Rational, right: Rational) -> Bool {
-    return left.numerator == right.numerator && left.denominator == right.denominator
+    return left.rational == right.rational
 }
 
 func != (left: Rational, right: Rational) -> Bool {
     return !(left == right)
 }
 
-func sqrt(rational: Rational) throws -> Rational {
-    if rational.numerator < 0 {
-        throw Exception(massage: "Extracting the root of a negative number.")
-    }
-    let numerator = sqrt(Double(rational.numerator))
-    let denominator = sqrt(Double(rational.denominator))
-    return Rational(numerator / denominator)
+func sqrt(rational: Rational) -> Rational {
+    return Rational(sqrt(rational.rational))
 }

@@ -11,7 +11,7 @@ class Imaginary {
     var im: Rational
     var re: Rational
     
-    var value: String { return "\(im.numerator)/\(im.denominator)i \(re.numerator)/\(re.denominator)" }
+    //var value: String { return "\(im.numerator)/\(im.denominator)i \(re.numerator)/\(re.denominator)" }
     
     init() {
         self.im = Rational()
@@ -21,11 +21,6 @@ class Imaginary {
     init(imaginary im: Rational, rational ra: Rational) {
         self.im = im
         self.re = ra
-    }
-    
-    init(imaginary im: Int64, rational re: Int64) {
-        self.im = Rational(im)
-        self.re = Rational(re)
     }
     
     init(imaginary im: Double, rational re: Double) {

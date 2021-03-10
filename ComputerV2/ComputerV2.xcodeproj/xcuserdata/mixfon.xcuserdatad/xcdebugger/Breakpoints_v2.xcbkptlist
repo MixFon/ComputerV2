@@ -95,8 +95,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "51"
             endingLineNumber = "51"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "checkLine(line:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -111,8 +111,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "52"
             endingLineNumber = "52"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "checkLine(line:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -157,8 +157,8 @@
             filePath = "TestsComputerV2/TestRational.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "58"
-            endingLineNumber = "58"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
             landmarkName = "testCostructor()"
             landmarkType = "7">
          </BreakpointContent>
@@ -173,9 +173,9 @@
             filePath = "TestsComputerV2/TestRational.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "165"
-            endingLineNumber = "165"
-            landmarkName = "testOperators()"
+            startingLineNumber = "150"
+            endingLineNumber = "150"
+            landmarkName = "testOperatorsPow()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -189,9 +189,9 @@
             filePath = "TestsComputerV2/TestRational.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "175"
-            endingLineNumber = "175"
-            landmarkName = "testOperators()"
+            startingLineNumber = "160"
+            endingLineNumber = "160"
+            landmarkName = "testOperatorsPow()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -205,25 +205,9 @@
             filePath = "TestsComputerV2/TestRational.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "184"
-            endingLineNumber = "184"
-            landmarkName = "testOperators()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "1A143479-9D6D-4155-808D-62219B63419D"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TestsComputerV2/TestRational.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "185"
-            endingLineNumber = "185"
-            landmarkName = "testOperators()"
+            startingLineNumber = "169"
+            endingLineNumber = "169"
+            landmarkName = "testOperatorsPow()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -256,22 +240,6 @@
             startingLineNumber = "79"
             endingLineNumber = "79"
             landmarkName = "testOperatorsAsterix()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "91A3F1EC-7E8C-4C79-8BD7-2A4C2C08559C"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TestsComputerV2/TestRational.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "127"
-            endingLineNumber = "127"
-            landmarkName = "testOperators()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

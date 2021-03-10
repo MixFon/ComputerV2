@@ -10,12 +10,21 @@ import XCTest
 @testable import ComputerV2
 
 class TestRational: XCTestCase {
+    var one: Rational!
+    var two: Rational!
+    var three: Rational!
 
     override func setUpWithError() throws {
+        one = Rational()
+        two = Rational()
+        three = Rational()
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
 
     override func tearDownWithError() throws {
+        one = nil
+        two = nil
+        three = nil
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
@@ -23,194 +32,154 @@ class TestRational: XCTestCase {
         
         // Кончтруктор по умолчани.
         let one = Rational()
-        XCTAssert(one.numerator == 0 && one.denominator == 1)
-        
-        // Коструктор с числителем и знаменателем
-        var two = try! Rational(numeratorInt: 12, denominatorInt: 24)
-        XCTAssert(two.numerator == 1 && two.denominator == 2)
-        
-        two = try! Rational(numeratorInt: 3, denominatorInt: 7)
-        XCTAssert(two.numerator == 3 && two.denominator == 7)
-        
-        two = try! Rational(numeratorInt: 6, denominatorInt: 2)
-        XCTAssert(two.numerator == 3 && two.denominator == 1)
-        
-        two = try! Rational(numeratorInt: 1, denominatorInt: 7)
-        XCTAssert(two.numerator == 1 && two.denominator == 7)
-        
-        two = try! Rational(numeratorInt: 3, denominatorInt: 7)
-        XCTAssert(two.numerator == 3 && two.denominator == 7)
-        
-        var three = try? Rational(numeratorInt: 4, denominatorInt: 0)
-        XCTAssertNil(three)
+        XCTAssert(one.rational == 0)
         
         // Коструктор копирования
-        three = Rational(other: two)
-        XCTAssert(three!.numerator == 3 && three!.denominator == 7)
+        let three = Rational(9.0932)
+        XCTAssert(three.rational == 9.0932)
         
         // Конструктор с десятичным аргументом
         var four = Rational(0.5)
-        XCTAssert(four.numerator == 1 && four.denominator == 2)
+        XCTAssert(four.rational == 0.5)
         
         four = Rational(1.7)
-        XCTAssert(four.numerator == 17 && four.denominator == 10)
+        XCTAssert(four.rational == 1.7)
         
         four = Rational(0.007)
-        XCTAssert(four.numerator == 7 && four.denominator == 1000)
-        
-        four = Rational(0.7)
-        XCTAssert(four.numerator == 7 && four.denominator == 10)
-        
-        four = Rational(0.333)
-        XCTAssert(four.numerator == 333 && four.denominator == 1000)
-        
-        four = Rational(2.25)
-        XCTAssert(four.numerator == 9 && four.denominator == 4)
-        
-        four = Rational(1.5)
-        XCTAssert(four.numerator == 3 && four.denominator == 2)
+        XCTAssert(four.rational == 0.007)
     }
     
-    func testOperators() throws {
+    func testOperatorsPlus() throws {
         // Оператор +
-        var one = try! Rational(numeratorInt: 4, denominatorInt: 7)
-        var two = try! Rational(numeratorInt: 5, denominatorInt: 9)
+        var one = Rational(0.5)
+        var two = Rational(0.25)
         var three = one + two
-        XCTAssert(three.numerator == 71 && three.denominator == 63)
+        XCTAssert(three.rational == 0.75)
         
-        one = try! Rational(numeratorInt: 14, denominatorInt: 13)
-        two = try! Rational(numeratorInt: 2, denominatorInt: 3)
+        one = Rational(14/13)
+        two = Rational(12/13)
         three = one + two
-        XCTAssert(three.numerator == 68 && three.denominator == 39)
+        XCTAssert(three.rational == 2)
         
-        one = try! Rational(numeratorInt: 4, denominatorInt: 6)
-        two = try! Rational(numeratorInt: 14, denominatorInt: 4)
+        one = Rational(4)
+        two = Rational(8)
         three = one + two
-        XCTAssert(three.numerator == 25 && three.denominator == 6)
-        
+        XCTAssert(three.rational == 12)
+    }
+    
+    func testOperatorsMinus() throws {
         // Оператор -
-        one = try! Rational(numeratorInt: 15, denominatorInt: 6)
-        two = try! Rational(numeratorInt: 5, denominatorInt: 15)
+        one = Rational(4)
+        two = Rational(8)
         three = one - two
-        XCTAssert(three.numerator == 13 && three.denominator == 6)
+        XCTAssert(three.rational == -4)
         
-        one = try! Rational(numeratorInt: 134, denominatorInt: 123)
-        two = try! Rational(numeratorInt: 15, denominatorInt: 85)
+        one = Rational(7.25)
+        two = Rational(0.25)
         three = one - two
-        XCTAssert(three.numerator == 1909 && three.denominator == 2091)
+        XCTAssert(three.rational == 7)
         
-        one = try! Rational(numeratorInt: 12, denominatorInt: 2)
-        two = try! Rational(numeratorInt: 18, denominatorInt: 6)
+        one = Rational(-4)
+        two = Rational(8)
         three = one - two
-        XCTAssert(three.numerator == 3 && three.denominator == 1)
-        
+        XCTAssert(three.rational == -12)
+    }
+    
+    func testOperatorsAsterux() throws {
         // Оператор *
-        one = try! Rational(numeratorInt: 15, denominatorInt: 6)
-        two = try! Rational(numeratorInt: 5, denominatorInt: 15)
+        one = Rational(-4)
+        two = Rational(8)
         three = one * two
-        XCTAssert(three.numerator == 5 && three.denominator == 6)
+        XCTAssert(three.rational == -32)
         
-        one = try! Rational(numeratorInt: 134, denominatorInt: 123)
-        two = try! Rational(numeratorInt: 15, denominatorInt: 85)
+        one = Rational(0.25)
+        two = Rational(4)
         three = one * two
-        XCTAssert(three.numerator == 134 && three.denominator == 697)
+        XCTAssert(three.rational == 1)
         
-        one = try! Rational(numeratorInt: 12, denominatorInt: 2)
-        two = try! Rational(numeratorInt: 18, denominatorInt: 6)
+        one = Rational(0.5)
+        two = Rational(0.5)
         three = one * two
-        XCTAssert(three.numerator == 18 && three.denominator == 1)
-        
+        XCTAssert(three.rational == 0.25)
+    }
+    
+    func testOperatorsDivision() throws {
         // Оператор /
-        one = try! Rational(numeratorInt: 15, denominatorInt: 6)
-        two = try! Rational(numeratorInt: 5, denominatorInt: 15)
-        print(two)
+        one = Rational(24)
+        two = Rational(8)
         three = try! one / two
+        XCTAssert(three.rational == 3)
         
-        XCTAssert(three.numerator == 15 && three.denominator == 2)
-        
-        one = try! Rational(numeratorInt: 134, denominatorInt: 123)
-        two = try! Rational(numeratorInt: 15, denominatorInt: 85)
+        one = Rational(5.5)
+        two = Rational(0.5)
         three = try! one / two
-        XCTAssert(three.numerator == 2278 && three.denominator == 369)
+        XCTAssert(three.rational == 11)
         
-        one = try! Rational(numeratorInt: 12, denominatorInt: 2)
-        two = try! Rational(numeratorInt: 18, denominatorInt: 6)
-        three = try! one / two
-        XCTAssert(three.numerator == 2 && three.denominator == 1)
-        
+        one = Rational(0.5)
+        two = Rational(0)
+        XCTAssertNil(try? one / two)
+    }
+    
+    func testOperatorsRemainder() throws {
         // Оператор %
         one = Rational(7.9)
         two = Rational(2.1)
         three = try! one % two
-        XCTAssert(three == Rational(1.6))
+        XCTAssert(three! == Rational(1.6))
         
         one = Rational(4.0)
         two = Rational(3.0)
         three = try! one % two
-        XCTAssert(three == Rational(1.0))
+        XCTAssert(three! == Rational(1.0))
         
         one = Rational(4.0)
         two = Rational(2.0)
         three = try! one % two
-        XCTAssert(three == Rational(0.0))
-        
+        XCTAssert(three! == Rational(0.0))
+    }
+    
+    func testOperatorsPow() throws {
         // Оператор ^
         one = Rational(4.0)
         two = Rational(3.0)
-        three = try! one ^ two
-        XCTAssert(three == Rational(64.0))
+        three = one ^ two
+        XCTAssert(three! == Rational(64.0))
         
         one = Rational(4.3)
         two = Rational(2.0)
-        three = try! one ^ two
-        XCTAssert(three == Rational(18.49))
+        three = one ^ two
+        XCTAssert(three! == Rational(18.49))
         
         one = Rational(4.0)
         two = Rational(3.0)
-        three = try! one ^ two
-        XCTAssert(three == Rational(64.0))
+        three = one ^ two
+        XCTAssert(three! == Rational(64.0))
         
         one = Rational(43.3)
         two = Rational(3.0)
-        three = try! one ^ two
-        XCTAssert(three == Rational(81182.737))
+        three = one ^ two
+        XCTAssert(three! == Rational(81182.73699999998))
         
         one = Rational(43.3)
         three = one ^ 3
-        XCTAssert(three == Rational(81182.737))
+        XCTAssert(three! == Rational(81182.73699999998))
         
         one = Rational(123.415)
         two = Rational(4.0)
-        three = try! one ^ two
-        print(Double(three.numerator / three.denominator))
-        XCTAssert(three.numerator == 371186158346739121 && three.denominator == 1600000000)
-        
-        // Исключения
-        one = try! Rational(numeratorInt: 12, denominatorInt: 2)
-        two = try! Rational(numeratorInt: 0, denominatorInt: 6)
-        XCTAssertNil(try? one % two)
-        
-        one = try! Rational(numeratorInt: 12, denominatorInt: 2)
-        two = try! Rational(numeratorInt: 0, denominatorInt: 6)
-        XCTAssertNil(try? one / two)
-        
-        one = try! Rational(numeratorInt: 12, denominatorInt: 2)
-        two = try! Rational(numeratorInt: 1, denominatorInt: 2)
-        XCTAssertNil(try? one ^ two)
+        three = one ^ two
+        print(three!)
+        XCTAssert(three!.rational == 231991348.966712)
     }
     
     func testSqrt() throws {
-        var one = try! Rational(numeratorInt: 16, denominatorInt: 9)
-        XCTAssert((try! sqrt(rational: one)) == (try! Rational(numeratorInt: 4, denominatorInt: 3)))
+        var one = Rational(4)
+        XCTAssert(sqrt(rational: one).rational == 2)
         
-        one = try! Rational(numeratorInt: 25, denominatorInt: 36)
-        XCTAssert(try! sqrt(rational: one) == (try! Rational(numeratorInt: 5, denominatorInt: 6)))
+        one = Rational(16.25)
+        XCTAssert(sqrt(rational: one).rational == 4.0311288741492748)
         
-        one = try! Rational(numeratorInt: 6234, denominatorInt: 24321)
-        XCTAssert((try! sqrt(rational: one)).decimalView == 0.5062822308999314)
-        
-        one = try! Rational(numeratorInt: 3, denominatorInt: 13)
-        print((try! sqrt(rational: one)).decimalView)
-        XCTAssert((try! sqrt(rational: one)).decimalView == 0.48038446135362434)
+        one = Rational(-16.25)
+        print(sqrt(rational: one))
+        XCTAssert(sqrt(rational: one).rational.isNaN)
     }
 }

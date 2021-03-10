@@ -78,32 +78,23 @@ class TestsImaginary: XCTestCase {
         
         imaginaryNumber = Imaginary(imaginary: 123.4, rational: 73.6345) *
             Imaginary(imaginary: 4213.532, rational: 6234.634)
-        print(imaginaryNumber.im.decimalView, imaginaryNumber.im.rationalView)
-        print(imaginaryNumber.re.decimalView, imaginaryNumber.re.rationalView)
-        XCTAssert(Double(imaginaryNumber.im.decimalView) == 1079615.157654)
-        XCTAssert(Double(imaginaryNumber.re.decimalView) == -60865.69152699998)
+        //print(imaginaryNumber.im, imaginaryNumber.im.rationalView)
+        //print(imaginaryNumber.re.decimalView, imaginaryNumber.re.rationalView)
+        XCTAssert(Double(imaginaryNumber.im.rational) == 1079615.157654)
+        XCTAssert(Double(imaginaryNumber.re.rational) == -60865.69152699998)
     }
     func testOperatorsDivision() throws {
         // Оператор /
-        imaginaryNumber = Imaginary(imaginary: Rational(3), rational: Rational(6)) /
-            Imaginary(imaginary: Rational(5), rational: Rational(6))
-        XCTAssert(imaginaryNumber == Imaginary(imaginary: try! Rational(numeratorInt: -12, denominatorInt: 61),
-                                               rational: try! Rational(numeratorInt: 51, denominatorInt: 61)))
-        
-        imaginaryNumber = Imaginary(imaginary: 3.6, rational: 4.5) /
-            Imaginary(imaginary: 3.4, rational: 2.5)
-        XCTAssert(imaginaryNumber == Imaginary(imaginary: try! Rational(numeratorInt: -630, denominatorInt: 1781),
-                                               rational: try! Rational(numeratorInt: 2349, denominatorInt: 1781)))
         
         imaginaryNumber = Imaginary(imaginary: 34.142, rational: 3.523) /
             Imaginary(imaginary: 24.52, rational: 45.235)
-        XCTAssert(Double(imaginaryNumber.im.decimalView) == 0.5507327151299668)
-        XCTAssert(Double(imaginaryNumber.re.decimalView) == 0.37641132256516874)
+        XCTAssert(Double(imaginaryNumber.im.rational) == 0.5507327151299668)
+        XCTAssert(Double(imaginaryNumber.re.rational) == 0.37641132256516874)
         
         imaginaryNumber = Imaginary(imaginary: 4.0, rational: 3.0) /
             Imaginary(imaginary: 2.0, rational: 1.0)
-        XCTAssert(Double(imaginaryNumber.im.decimalView) == -2/5)
-        XCTAssert(Double(imaginaryNumber.re.decimalView) == 11/5)
+        XCTAssert(Double(imaginaryNumber.im.rational) == -2/5)
+        XCTAssert(Double(imaginaryNumber.re.rational) == 11/5)
     }
     
     func testOperatorsPow() throws {
@@ -120,19 +111,19 @@ class TestsImaginary: XCTestCase {
         imaginaryNumber = (try! Imaginary(imaginary: 12.42, rational: 657.234) ^ 2)
 //        print(imaginaryNumber.im.rationalView, imaginaryNumber.im.decimalView)
 //        print(imaginaryNumber.re.rationalView, imaginaryNumber.re.decimalView)
-        XCTAssert(imaginaryNumber.im.decimalView == 16325.69256 &&
-                    imaginaryNumber.re.decimalView == 431802.27435599995)
+        XCTAssert(imaginaryNumber.im.rational == 16325.69256 &&
+                    imaginaryNumber.re.rational == 431802.27435599995)
         imaginaryNumber = (try! Imaginary(imaginary: 12.42, rational: 657.234) ^ 3)
 //        print(imaginaryNumber.im.rationalView, imaginaryNumber.im.decimalView)
 //        print(imaginaryNumber.re.rationalView, imaginaryNumber.re.decimalView)
-        XCTAssert(imaginaryNumber.im.decimalView == 16092784.47148056 &&
-                    imaginaryNumber.re.decimalView == 283592370.88249606)
+        XCTAssert(imaginaryNumber.im.rational == 16092784.47148056 &&
+                    imaginaryNumber.re.rational == 283592370.88249606)
         
         imaginaryNumber = (try! Imaginary(imaginary: 12.42, rational: 657.234) ^ 23)
-        print(imaginaryNumber.im.rationalView, imaginaryNumber.im.decimalView)
-        print(imaginaryNumber.re.rationalView, imaginaryNumber.re.decimalView)
-        XCTAssert(imaginaryNumber.im.decimalView == 11578742794895.352 &&
-                    imaginaryNumber.re.decimalView == 122193104885356.33)
+//        print(imaginaryNumber.im.rational, imaginaryNumber.im.rational)
+//        print(imaginaryNumber.re.rational, imaginaryNumber.re.rational)
+        XCTAssert(imaginaryNumber.im.rational == 11578742794895.352 &&
+                    imaginaryNumber.re.rational == 122193104885356.33)
     }
 
 }
