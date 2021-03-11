@@ -11,7 +11,7 @@ class Imaginary {
     var im: Rational
     var re: Rational
     
-    //var value: String { return "\(im.numerator)/\(im.denominator)i \(re.numerator)/\(re.denominator)" }
+    var value: String { return "\(re) \(im)i" }
     
     init() {
         self.im = Rational()
@@ -59,15 +59,26 @@ func / (left: Imaginary, right: Imaginary) -> Imaginary {
     return Imaginary(imaginary: imaginary, rational: rational)
 }
 
-// MARK: Оператор возведения в степень.
+// MARK: Оператор возведения в степень итеративно.
 infix operator ^
-func ^ (imaginary: Imaginary, power: Int) throws -> Imaginary {
+func ^ (imaginary: Imaginary, power: Int) -> Imaginary {
     var imaginatyValue = imaginary
     for _ in 1..<power {
         imaginatyValue = imaginatyValue * imaginary
     }
     return imaginatyValue
 }
+
+// MARK: Оператор возведения в степень итеративно.
+//infix operator ^
+//func ^ (imaginary: Imaginary, power: Int) throws -> Imaginary {
+//    let modul = sqrt(rational: (imaginary.im ^ 2) + (imaginary.re ^ 2))
+//    let arg = atan((try! imaginary.im / imaginary.re).rational)
+//    let re = (modul ^ Double(power)).rational * cos(Double(power) * arg)
+//    let im = (modul ^ Double(power)).rational * sin(Double(power) * arg)
+//    return Imaginary(imaginary: im, rational: re)
+//}
+
 
 // MARK: Оператор эквивалентности.
 func == (left: Imaginary, right: Imaginary) -> Bool {

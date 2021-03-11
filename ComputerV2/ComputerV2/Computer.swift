@@ -26,6 +26,7 @@ class Computer {
         }
     }
     
+    // MARK: Перевод строки в постфиксную форму.
     func conversionPostfixForm(infixFomr: String) -> String {
         let lineSpace = addSpace(line: infixFomr).split() { $0 == " "}.map{ String($0) }
         //print(addSpace(line: line))
@@ -59,8 +60,6 @@ class Computer {
             let char = stack.popLast()!
             postfixForm += String(char) + " "
         }
-        //print(lineSpace)
-        //print(postfixForm)
         return String(postfixForm.dropLast())
     }
     
@@ -127,8 +126,7 @@ class Computer {
             let leftRieght = line.split(){ $0 == "=" }.map{ String($0) }
             for lr in leftRieght {
                 try checker.checkLine(line: lr)
-                try checker.checkBreckets(line: lr, breckets: "()")
-                try checker.checkBreckets(line: lr, breckets: "[]")
+                try checker.checkBreckets(line: lr)
             }
         } catch let exception as Exception {
             systemError(massage: exception.massage)

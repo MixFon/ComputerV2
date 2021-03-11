@@ -21,18 +21,21 @@ class Checker {
     }
     
     // MARK: Проверяем прально ли раставлены скобки
-    func checkBreckets(line: String, breckets: String) throws {
+    func checkBreckets(line: String) throws {
         let error = "The brackets are placed incorrectly."
-        var stack: String = ""
-        for char in line {
-            if char == breckets.first {
-                stack.append(char)
-            }
-            else if char == breckets.last {
+        var stack = String()
+        let dict = [")":"(", "}":"{", "]":"["]
+        for c in line {
+            if "({[".contains(c) {
+                stack.append(c)
+            } else if ")}]".contains(c) {
                 if stack.isEmpty {
                     throw Exception(massage: error)
-                } else {
-                    _ = stack.popLast()
+                }
+                guard let value = dict[String(c)] else { throw Exception(massage: error) }
+                guard let last = stack.popLast() else { throw Exception(massage: error) }
+                if String(last) != value {
+                    throw Exception(massage: error)
                 }
             }
         }
@@ -43,20 +46,60 @@ class Checker {
     
     // MARK: Проверка синтаксиса строки
     public func checkLine(line: String) throws {
-        let firstChar = line.first ?? "+"
-        let lastChar = line.last ?? "+"
-        if "^*/%.".contains(firstChar) {
+        let firstChar = line.first ?? "*"
+        let lastChar = line.last ?? "*"
+        if "^*/%.,]);".contains(firstChar) {
             throw Exception(massage: "Invalid syntax in start string.")
         }
-        if "^*/%.+-".contains(lastChar) {
+        if "^*/%.,+-[(;".contains(lastChar) {
             throw Exception(massage: "Invalid syntax in end string.")
         }
+        if line.contains(")(") || line.contains("][") || line.contains("()") || line.contains("[]"){
+            throw Exception(massage: "Invalid syntax breckets.")
+        }
         for (i, c) in line.enumerated() {
-            if c == "." {
+            if c == "." || c == "," {
                 let charBefore = line[line.index(line.startIndex, offsetBy: i - 1)]
                 let charAfter = line[line.index(line.startIndex, offsetBy: i + 1)]
                 if !charBefore.isNumber || !charAfter.isNumber {
-                    throw Exception(massage: "Error: \(charBefore)\(c)\(charAfter). Error in the determination of the coefficient.")
+                    throw Exception(massage: "Error: \(charBefore)\(c)\(charAfter). Invalid syntax.")
+                }
+            } else if c == ";" {
+                let charBefore = line[line.index(line.startIndex, offsetBy: i - 1)]
+                let charAfter = line[line.index(line.startIndex, offsetBy: i + 1)]
+                if charBefore != "]" || charAfter != "["{
+                    throw Exception(massage: "Error: \(charBefore)\(c)\(charAfter). Invalid syntax matrix.")
+                }
+            } else if c == "[" && c != firstChar {
+                let charBefore = line[line.index(line.startIndex, offsetBy: i - 1)]
+                let charAfter = line[line.index(line.startIndex, offsetBy: i + 1)]
+                if !"+-*;[".contains(charBefore) || !charAfter.isNumber && charAfter != "[" {
+                    throw Exception(massage: "Error: \(charBefore)\(c)\(charAfter). Invalid syntax breckets.")
+                }
+            } else if c == "]" && c != lastChar {
+                let charBefore = line[line.index(line.startIndex, offsetBy: i - 1)]
+                let charAfter = line[line.index(line.startIndex, offsetBy: i + 1)]
+                if !charBefore.isNumber && charBefore != "]" || !"+-*;]".contains(charAfter){
+                    throw Exception(massage: "Error: \(charBefore)\(c)\(charAfter). Invalid syntax breckets.")
+                }
+            } else if c == "(" && c != firstChar {
+                let charBefore = line[line.index(line.startIndex, offsetBy: i - 1)]
+                let charAfter = line[line.index(line.startIndex, offsetBy: i + 1)]
+                if !"+-*/^%(".contains(charBefore) || "+-*/^%".contains(charAfter) {
+                    throw Exception(massage: "Error: \(charBefore)\(c)\(charAfter). Invalid syntax breckets.")
+                }
+            } else if c == ")" && c != lastChar {
+                let charBefore = line[line.index(line.startIndex, offsetBy: i - 1)]
+                let charAfter = line[line.index(line.startIndex, offsetBy: i + 1)]
+                if "+-*/^%(".contains(charBefore) || !"+-*/^%)".contains(charAfter){
+                    throw Exception(massage: "Error: \(charBefore)\(c)\(charAfter). Invalid syntax breckets.")
+                }
+            }
+            if "+-^*/%.,".contains(c) {
+                let charBefore = line[line.index(line.startIndex, offsetBy: i - 1)]
+                let charAfter = line[line.index(line.startIndex, offsetBy: i + 1)]
+                if "+-^*/%.,([".contains(charBefore) || "+-^*/%.,)]".contains(charAfter){
+                    throw Exception(massage: "Error: \(charBefore)\(c)\(charAfter). Invalid syntax breckets.")
                 }
             }
         }
