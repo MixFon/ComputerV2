@@ -28,7 +28,9 @@ class TestsComputerV2: XCTestCase {
             "3 + 4 * 2 / (1 - 5)^2".removeWhitespace(): "3 4 2 * 1 5 - 2 ^ / +" ,
             "(21 * 2)^42-(12 * 2)^23+32*5".removeWhitespace(): "21 2 * 42 ^ 12 2 * 23 ^ - 32 5 * +" ,
             "x ^ y / (5 * z) + 10".removeWhitespace(): "x y ^ 5 z * / 10 +" ,
-            "(32 * 2)^23*3+3".removeWhitespace(): "32 2 * 23 ^ 3 * 3 +"
+            "(32 * 2)^23*3+3".removeWhitespace(): "32 2 * 23 ^ 3 * 3 +",
+            "((3+4)^(5-6))*7+(9/ 8)".removeWhitespace(): "3 4 + 5 6 - ^ 7 * 9 8 / +"
+            
         ]
         for elem in testDict {
             XCTAssertEqual(computer.conversionPostfixForm(infixFomr: elem.key), elem.value)

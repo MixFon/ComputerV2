@@ -55,7 +55,10 @@ class TestsChecker: XCTestCase {
             "(2+3)^3+4*{s^3+2}*[3+3]",
             "((3+3)^3+3)*3)",
             "((6-3))",
-            "((3+3)^3*3+(3+2)"
+            "((3+3)^3*3+(3+2)",
+            "((3+3)^(3+3))*3+(3+2)",
+            "((3+4)^(5-6))*7+(9/8)",
+            "[[1,3];[2,4];[5,7]]"
         ]
         for line in line {
             let temp: ()? = try? checker.checkLine(line: line)
@@ -79,7 +82,9 @@ class TestsChecker: XCTestCase {
             "3+4++",
             "(4+3-3**3)",
             "3^^4",
-            "(*("
+            "(*(",
+            "[[1,3][2,4];[5,7]]",
+            "[[1,3];[2,4];]",
         ]
         for line in line {
             let temp: ()? = try? checker.checkLine(line: line)
