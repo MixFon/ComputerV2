@@ -7,8 +7,7 @@
 
 import Foundation
 
-class Rational: NSObject {
-    
+class Rational: NSObject, TypeProtocol {
     var rational: Double
     
     override init() {
@@ -16,6 +15,14 @@ class Rational: NSObject {
     }
     
     override var description: String {return "\(rational)"}
+    
+    // MARK: Конструктор создания нового значения из строки
+    required init(expression: String) throws {
+        guard let value = Double(expression) else {
+            throw Exception(massage: "Error create rational value.")
+        }
+        self.rational = value
+    }
     
     // MARK: Конструктор копирования
     init(other: Rational) {

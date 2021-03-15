@@ -73,7 +73,7 @@ class Matrix {
     
 }
 
-infix operator ** : BitwiseShiftPrecedence
+infix operator ** : MultiplicationPrecedence
 
 extension Matrix {
     // MARK: Оператор сложения матриц.

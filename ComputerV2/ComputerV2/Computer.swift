@@ -8,17 +8,14 @@
 import Foundation
 
 class Computer {
-    // varA =  ( 3 + 4 ) * 4 + 4 % 3 * ( varR + 3 )
-    // varA =  (3+34)*45+4%355*(3+333)^23
-    // (3+34)*45+4%355*(3+333)^23
-    // (3+34)*45+4%355*(3+333)*23
-    // (1+2)/(3+4*6.7)-5.3*4.4
+    
     func run() {
         while true {
             print("> ", terminator: "")
             guard var line = readLine() else { continue }
             line = line.lowercased()
-            let lineWithoutSpace = line.removeWhitespace()
+            var lineWithoutSpace = line.replace(string: "**", replacement: "@")
+            lineWithoutSpace = lineWithoutSpace.removeWhitespace()
             if lineWithoutSpace.isEmpty { continue }
             if lineWithoutSpace == "exit" { exit(0) }
             if !checkErrors(line: lineWithoutSpace) { continue }
@@ -29,9 +26,9 @@ class Computer {
     
     // MARK: Перевод строки в постфиксную форму.
     func conversionPostfixForm(infixFomr: String) -> String {
-        let lineSpace = addSpace(line: infixFomr).split() { $0 == " "}.map{ String($0) }
+        let lineSpace = addSpace(line: infixFomr).split() { $0 == " " }.map{ String($0) }
         //print(addSpace(line: line))
-        let prioritySign = ["(": 0, ")": 1, "+": 2, "-": 2, "*": 3, "/": 3, "%": 3, "^": 4]
+        let prioritySign = ["(": 0, ")": 1, "+": 2, "-": 2, "*": 3, "@": 3, "/": 3, "%": 3, "^": 4]
         var postfixForm: String = String()
         var stack: String = String()
         for elem in lineSpace {
@@ -109,8 +106,14 @@ class Computer {
     // MARK: Добавляет пробелы слева и справа от +-*/%()^
     func addSpace(line: String) -> String {
         var string = String()
+        var coutnBreckets = 0
         for char in line {
-            if "+-*/%()^".contains(char) {
+            if char == "[" {
+                coutnBreckets += 1
+            } else if char == "]" {
+                coutnBreckets -= 1
+            }
+            if "+-*/%()^@".contains(char) && coutnBreckets == 0 {
                 string += " \(char) "
             } else {
                 string += String(char)
@@ -124,8 +127,8 @@ class Computer {
         let checker = Checker()
         do {
             try checker.checkCountSymbolEqual(line: line)
-            let leftRieght = line.split(){ $0 == "=" }.map{ String($0) }
-            for lr in leftRieght {
+            let leftRight = line.split(){ $0 == "=" }.map{ String($0) }
+            for lr in leftRight {
                 try checker.checkLine(line: lr)
                 try checker.checkBreckets(line: lr)
             }
