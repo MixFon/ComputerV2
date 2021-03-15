@@ -70,25 +70,6 @@ class Rational: NSObject {
     }
 }
 
-func + (left: Rational, right: Rational) -> Rational {
-    return Rational(left.rational + right.rational)
-}
-
-func - (left: Rational, right: Rational) -> Rational {
-    return Rational(left.rational - right.rational)
-}
-
-func * (left: Rational, right: Rational) -> Rational {
-    return Rational(left.rational * right.rational)
-}
-
-func / (left: Rational, right: Rational) throws -> Rational {
-    if right.rational == 0 {
-        throw Exception(massage: "Division by zero.")
-    }
-    return Rational(left.rational / right.rational)
-}
-
 func % (left: Rational, right: Rational) throws -> Rational {
     if right.rational == 0 {
         throw Exception(massage: "Division by zero.")
@@ -96,21 +77,43 @@ func % (left: Rational, right: Rational) throws -> Rational {
     return Rational(left.rational.truncatingRemainder(dividingBy: right.rational))
 }
 
-infix operator ^
-func ^ (number: Rational, power: Rational) -> Rational {
-    return Rational(pow(number.rational, power.rational))
-}
+extension Rational {
+    static func + (left: Rational, right: Rational) -> Rational {
+        return Rational(left.rational + right.rational)
+    }
 
-func ^ (number: Rational, power: Double) -> Rational {
-    return Rational(pow(number.rational, power))
-}
+    static func - (left: Rational, right: Rational) -> Rational {
+        return Rational(left.rational - right.rational)
+    }
 
-func == (left: Rational, right: Rational) -> Bool {
-    return left.rational == right.rational
-}
+    static func * (left: Rational, right: Rational) -> Rational {
+        return Rational(left.rational * right.rational)
+    }
 
-func != (left: Rational, right: Rational) -> Bool {
-    return !(left == right)
+    static func / (left: Rational, right: Rational) throws -> Rational {
+        if right.rational == 0 {
+            throw Exception(massage: "Division by zero.")
+        }
+        return Rational(left.rational / right.rational)
+    }
+    
+    static func ^ (number: Rational, power: Rational) -> Rational {
+        return Rational(pow(number.rational, power.rational))
+    }
+
+    static func ^ (number: Rational, power: Double) -> Rational {
+        return Rational(pow(number.rational, power))
+    }
+
+    static func == (left: Rational, right: Rational) -> Bool {
+        return left.rational == right.rational
+    }
+
+    static func != (left: Rational, right: Rational) -> Bool {
+        return !(left == right)
+    }
+
+    
 }
 
 func sqrt(rational: Rational) -> Rational {

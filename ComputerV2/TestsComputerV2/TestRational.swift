@@ -7,7 +7,7 @@
 
 import XCTest
 
-@testable import ComputerV2
+//@testable import ComputerV2
 
 class TestRational: XCTestCase {
     var one: Rational!

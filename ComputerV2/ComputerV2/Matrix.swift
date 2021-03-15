@@ -73,77 +73,114 @@ class Matrix {
     
 }
 
-// MARK: Оператор сложения матриц.
-func + (left: Matrix, right: Matrix) throws -> Matrix {
-    if left.rows != right.rows || left.colums != right.colums {
-        throw Exception(massage: "Error: Matrices of different dimention.")
-    }
-    let result = Matrix()
-    for (left, right) in zip(left.matrix, right.matrix) {
-        var row = [Rational]()
-        for (le, ri) in zip(left, right) {
-            row.append(le + ri)
+infix operator ** : BitwiseShiftPrecedence
+
+extension Matrix {
+    // MARK: Оператор сложения матриц.
+    static func + (left: Matrix, right: Matrix) throws -> Matrix {
+        if left.rows != right.rows || left.colums != right.colums {
+            throw Exception(massage: "Error: Matrices of different dimention.")
         }
-        result.matrix.append(row)
-    }
-    return result
-}
-
-// MARK: Оператор вычитания матриц.
-func - (left: Matrix, right: Matrix) throws -> Matrix {
-    if left.rows != right.rows || left.colums != right.colums {
-        throw Exception(massage: "Error: Matrices of different dimention.")
-    }
-    let result = Matrix()
-    for (left, right) in zip(left.matrix, right.matrix) {
-        var row = [Rational]()
-        for (le, ri) in zip(left, right) {
-            row.append(le - ri)
+        let result = Matrix()
+        for (left, right) in zip(left.matrix, right.matrix) {
+            var row = [Rational]()
+            for (le, ri) in zip(left, right) {
+                row.append(le + ri)
+            }
+            result.matrix.append(row)
         }
-        result.matrix.append(row)
+        return result
     }
-    return result
-}
 
-// MARK: Оператор умножения матрицы на Rational.
-func * (matrix: Matrix, rational: Rational) -> Matrix {
-    let result = Matrix()
-    for row in matrix.matrix {
-        var newRow = [Rational]()
-        for element in row {
-            newRow.append(element * rational)
+    // MARK: Оператор вычитания матриц.
+    static func - (left: Matrix, right: Matrix) throws -> Matrix {
+        if left.rows != right.rows || left.colums != right.colums {
+            throw Exception(massage: "Error: Matrices of different dimention.")
         }
-        result.matrix.append(newRow)
+        let result = Matrix()
+        for (left, right) in zip(left.matrix, right.matrix) {
+            var row = [Rational]()
+            for (le, ri) in zip(left, right) {
+                row.append(le - ri)
+            }
+            result.matrix.append(row)
+        }
+        return result
     }
-    return result
-}
 
-// MARK: Оператор умножения матрицы на матрицу.
-func * (left: Matrix, right: Matrix) throws -> Matrix {
-    if left.colums != right.rows {
-        throw Exception(massage: "The matrices cannot be rearranged, since their dimensions do not match.")
+    // MARK: Оператор умножения матрицы на Rational.
+    static func * (matrix: Matrix, rational: Rational) -> Matrix {
+        let result = Matrix()
+        for row in matrix.matrix {
+            var newRow = [Rational]()
+            for element in row {
+                newRow.append(element * rational)
+            }
+            result.matrix.append(newRow)
+        }
+        return result
     }
-    let result = Matrix(rows: left.rows, colums: right.colums)
-    print(result.printMatrix())
-    return result
-}
+    
+    // MARK: Оператор умножения матрицы на матрицу term-to-term.
+    static func * (left: Matrix, right: Matrix) throws -> Matrix {
+        if left.rows != right.rows || left.colums != right.colums {
+            throw Exception(massage: "Error: Matrices of different dimention.")
+        }
+        let result = Matrix()
+        for (left, right) in zip(left.matrix, right.matrix) {
+            var row = [Rational]()
+            for (le, ri) in zip(left, right) {
+                row.append(le * ri)
+            }
+            result.matrix.append(row)
+        }
+        return result
+    }
 
-// MARK: Оператор сравнения матриц.
-func == (left: Matrix, right: Matrix) -> Bool {
-    if left.rows != right.rows || left.colums != right.colums {
-        return false
-    }
-    for (left, right) in zip(left.matrix, right.matrix) {
-        for (le, ri) in zip(left, right) {
-            if le != ri {
-                return false
+    // MARK: Оператор умножения матрицы на матрицу. Матричное умножение.
+    static func ** (left: Matrix, right: Matrix) throws -> Matrix {
+        if left.colums != right.rows {
+            throw Exception(massage: "The matrices cannot be rearranged, since their dimensions do not match.")
+        }
+        let result = Matrix(rows: left.rows, colums: right.colums)
+        for i in 0..<result.rows{
+            for j in 0..<result.colums {
+                let temp = getSummRowsColums(left: left.matrix, right: right.matrix, i: i, j: j)
+                result.matrix[i][j] = temp
             }
         }
+        print(result.printMatrix())
+        return result
     }
-    return true
+
+    static func getSummRowsColums(left: [[Rational]], right: [[Rational]], i: Int, j: Int) -> Rational{
+        var summ = Rational()
+        guard let first = left.first else { return Rational() }
+        for k in 0..<first.count {
+            summ = summ + (left[i][k] * right[k][j])
+        }
+        return summ
+    }
+
+    // MARK: Оператор сравнения матриц.
+    static func == (left: Matrix, right: Matrix) -> Bool {
+        if left.rows != right.rows || left.colums != right.colums {
+            return false
+        }
+        for (left, right) in zip(left.matrix, right.matrix) {
+            for (le, ri) in zip(left, right) {
+                if le != ri {
+                    return false
+                }
+            }
+        }
+        return true
+    }
+
+    // MARK: Оператор не равно матриц.
+    static func != (left: Matrix, right: Matrix) -> Bool {
+        return !(left == right)
+    }
+
 }
 
-// MARK: Оператор не равно матриц.
-func != (left: Matrix, right: Matrix) -> Bool {
-    return !(left == right)
-}

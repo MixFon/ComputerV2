@@ -16,8 +16,9 @@ class Computer {
     func run() {
         while true {
             print("> ", terminator: "")
-            let line = readLine()?.lowercased()
-            let lineWithoutSpace = line?.removeWhitespace() ?? ""
+            guard var line = readLine() else { continue }
+            line = line.lowercased()
+            let lineWithoutSpace = line.removeWhitespace()
             if lineWithoutSpace.isEmpty { continue }
             if lineWithoutSpace == "exit" { exit(0) }
             if !checkErrors(line: lineWithoutSpace) { continue }
