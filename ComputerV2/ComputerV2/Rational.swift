@@ -19,8 +19,7 @@ class Rational: NSObject, TypeProtocol {
     // MARK: Конструктор создания нового значения из строки
     required init(expression: String) throws {
         if expression.isEmpty {
-            self.rational = 1
-            return
+            throw Exception(massage: "Empty string in rational value.")
         }
         guard let value = Double(expression) else {
             throw Exception(massage: "Error create rational value.")
@@ -118,6 +117,10 @@ extension Rational {
 
     static func == (left: Rational, right: Rational) -> Bool {
         return left.rational == right.rational
+    }
+    
+    static func == (left: Rational, right: Double) -> Bool {
+        return left.rational == right
     }
 
     static func != (left: Rational, right: Rational) -> Bool {

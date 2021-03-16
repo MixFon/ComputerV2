@@ -14,8 +14,8 @@
             filePath = "ComputerV2/Computer.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "223"
-            endingLineNumber = "223"
+            startingLineNumber = "255"
+            endingLineNumber = "255"
             landmarkName = "checkErrors(line:)"
             landmarkType = "7">
             <Locations>
@@ -77,8 +77,8 @@
             filePath = "ComputerV2/Computer.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "136"
-            endingLineNumber = "136"
+            startingLineNumber = "83"
+            endingLineNumber = "83"
             landmarkName = "conversionPostfixForm(infixFomr:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -480,38 +480,22 @@
             endingLineNumber = "60"
             landmarkName = "testCalculateDoubleValue()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "CB1A9F55-8FFB-47B5-8EE9-3429AEE706F8 - 470793bff1c85a58"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "TestsComputerV2.TestsComputerV2.testCalculateDoubleValue() throws -&gt; ()"
-                  moduleName = "TestsComputerV2"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mixfon/MyFiles/Swift/ComputerV2/ComputerV2/TestsComputerV2/TestsComputerV2.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "60"
-                  endingLineNumber = "60"
-                  offsetFromSymbolStart = "2236">
-               </Location>
-               <Location
-                  uuid = "CB1A9F55-8FFB-47B5-8EE9-3429AEE706F8 - 470793bff1c85a58"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "TestsComputerV2.TestsComputerV2.testCalculateDoubleValue() throws -&gt; ()"
-                  moduleName = "TestsComputerV2"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mixfon/MyFiles/Swift/ComputerV2/ComputerV2/TestsComputerV2/TestsComputerV2.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "60"
-                  endingLineNumber = "60"
-                  offsetFromSymbolStart = "3230">
-               </Location>
-            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7ED33A80-E064-4491-9524-28D63CBB0338"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ComputerV2/Computer.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "193"
+            endingLineNumber = "193"
+            landmarkName = "getTypeVariable(variable:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

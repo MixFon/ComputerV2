@@ -23,11 +23,13 @@ class Imaginary: TypeProtocol {
     required convenience init(expression: String) throws {
         var expression = expression
         self.init()
+        if expression == "i" {
+            self.im = Rational(1.0)
+            return
+        }
         if expression.last == "i" {
             expression.remove(at: expression.index(before: expression.endIndex))
             self.im = try Rational(expression: expression)
-        } else {
-            self.re = try Rational(expression: expression)
         }
     }
     

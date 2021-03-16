@@ -51,9 +51,142 @@ class Computer {
         let leftRight = line.split() { $0 == "=" }.map { String($0) }
         let nameVariable = leftRight.first!
         try checkValidName(name: nameVariable)
+        // Создавать после вычисления значения переменной.
         let newVariable = Variable(name: nameVariable)
         let postfixForm = conversionPostfixForm(infixFomr: leftRight.last!)
+        newVariable.value = try calculateValue(postfixForm: postfixForm)
+        self.variables.append(newVariable)
+        let temp = newVariable.value as! Rational
+        print(temp.rational)
         
+    }
+    
+    // MARK: Проверка имени переменной и функции. Имя не должно содержать цифр.
+    private func checkValidName(name: String) throws {
+        for c in name {
+            if c.isNumber {
+                throw Exception(massage: "The name of a variable or function must not contain numbers.")
+            }
+        }
+    }
+    
+    // MARK: Перевод строки в постфиксную форму.
+    func conversionPostfixForm(infixFomr: String) -> String {
+        var lineSpace = infixFomr.addSpace().getWords()
+        if "+-".contains(infixFomr.first!) {
+            lineSpace = ["0"] + lineSpace
+        }
+        //print(addSpace(line: line))
+        let prioritySign = ["(": 0, ")": 1, "+": 2, "-": 2, "*": 3, "@": 3, "/": 3, "%": 3, "^": 4]
+        var postfixForm: String = String()
+        var stack: String = String()
+        for elem in lineSpace {
+            if let priority = prioritySign[elem] {
+                if priority == 1 {
+                    while prioritySign[String(stack.last!)]! > 0 {
+                        let char = stack.popLast()!
+                        postfixForm += String(char) + " "
+                    }
+                    _ = stack.popLast()!
+                }
+                else if priority == 0 || stack.isEmpty || priority > prioritySign[String(stack.last!)]! {
+                    stack += elem
+                } else {
+                    while priority <= prioritySign[String(stack.last!)]! {
+                        let char = stack.popLast()!
+                        postfixForm += String(char) + " "
+                        if stack.isEmpty { break }
+                    }
+                    stack += elem
+                }
+            } else {
+                postfixForm += elem + " "
+            }
+        }
+        while !stack.isEmpty {
+            let char = stack.popLast()!
+            postfixForm += String(char) + " "
+        }
+        return String(postfixForm.dropLast())
+    }
+    
+    // MARK: Выполнение арифметических операций и возаращение результата операции.
+    private func workingOperatorts(element: String, first: TypeProtocol, second: TypeProtocol) throws -> TypeProtocol {
+        
+        let first = first as! Rational
+        let second = second as! Rational
+        //let first = Double(firstValue)!
+        //let second = Double(secondValue)!
+        //var temp = TypeProtocol(expression: "[[3]]")
+        var temp = Rational()
+        switch element {
+        case "+":
+            temp = first + second
+        case "-":
+            temp = first - second
+        case "*":
+            temp = first * second
+        case "/":
+            if second == 0 {
+                throw Exception(massage: "Division by zero.")
+            }
+            temp = try first / second
+        //case "%":
+        //    temp = first % second
+        //case "^":
+        //    temp = pow(first, second)
+        default:
+            break
+        }
+        return temp
+    }
+    
+    
+    // MARK: Вычисление значения из выражения в обратной польской нотоции.
+    func calculateValue(postfixForm: String) throws -> TypeProtocol {
+        var stack = [TypeProtocol]()
+        let elements = postfixForm.split() { $0 == " "}.map{ String($0) }
+        for element in elements {
+            if "*/^+-@".contains(element) {
+                guard let secondValue = stack.popLast(), let firstValue = stack.popLast() else {
+                    throw Exception(massage: "Invalid operand.")
+                }
+                let resultOperation = try workingOperatorts(element: element, first: firstValue, second: secondValue)
+                stack.append(resultOperation)
+            } else {
+                let newValue = try createElementTypeProtocol(variable: element)
+                stack.append(newValue)
+            }
+        }
+        guard let last = stack.popLast() else {
+            throw Exception(massage: "Invalid operand.")
+        }
+        return last
+    }
+    
+    // MARK: Создание нового элемента типа TypeProtocol для добавления в стек.
+    private func createElementTypeProtocol(variable: String) throws -> TypeProtocol {
+        let type = getTypeVariable(variable: variable)
+        switch type {
+        case .rational:
+            return try Rational(expression: variable)
+        case .imaginary:
+            return try Imaginary(expression: variable)
+        case .matrix:
+            return try Matrix(expression: variable)
+        case .variable:
+            for existingVariable in self.variables {
+                if existingVariable.name == variable {
+                    guard let value =  existingVariable.value else {
+                        throw Exception(massage: "Invalig existing value.")
+                    }
+                    return value
+                }
+            }
+        default:
+            throw Exception(massage: "Invalid value: \(variable)")
+        }
+        return Rational()
     }
     
     // MARK: Определить тип: рациональное число, комплекское, матрица, существующая переменая, ошибка.
@@ -112,107 +245,6 @@ class Computer {
             }
         }
         return false
-    }
-    
-    // MARK: Проверка имени переменной и функции. Имя не должно содержать цифр.
-    private func checkValidName(name: String) throws {
-        for c in name {
-            if c.isNumber {
-                throw Exception(massage: "The name of a variable or function must not contain numbers.")
-            }
-        }
-    }
-    
-    // MARK: Перевод строки в постфиксную форму.
-    func conversionPostfixForm(infixFomr: String) -> String {
-        var lineSpace = infixFomr.addSpace().getWords()
-        if "+-".contains(infixFomr.first!) {
-            lineSpace = ["0"] + lineSpace
-        }
-        //print(addSpace(line: line))
-        let prioritySign = ["(": 0, ")": 1, "+": 2, "-": 2, "*": 3, "@": 3, "/": 3, "%": 3, "^": 4]
-        var postfixForm: String = String()
-        var stack: String = String()
-        for elem in lineSpace {
-            if let priority = prioritySign[elem] {
-                if priority == 1 {
-                    while prioritySign[String(stack.last!)]! > 0 {
-                        let char = stack.popLast()!
-                        postfixForm += String(char) + " "
-                    }
-                    _ = stack.popLast()!
-                }
-                else if priority == 0 || stack.isEmpty || priority > prioritySign[String(stack.last!)]! {
-                    stack += elem
-                } else {
-                    while priority <= prioritySign[String(stack.last!)]! {
-                        let char = stack.popLast()!
-                        postfixForm += String(char) + " "
-                        if stack.isEmpty { break }
-                    }
-                    stack += elem
-                }
-            } else {
-                postfixForm += elem + " "
-            }
-        }
-        while !stack.isEmpty {
-            let char = stack.popLast()!
-            postfixForm += String(char) + " "
-        }
-        return String(postfixForm.dropLast())
-    }
-    
-    // MARK: Выполнение арифметических операций и возаращение результата операции.
-    private func workingOperatorts(element: String, first: String, second: String) -> TypeProtocol {
-        
-        let type = getTypeVariable(variable: first)
-        
-        let first = Double(firstValue)!
-        let second = Double(secondValue)!
-        var temp = Double()
-        switch element {
-        case "+":
-            temp = first + second
-        case "-":
-            temp = first - second
-        case "*":
-            temp = first * second
-        case "/":
-            if second == 0 {
-                throw Exception(massage: "Division by zero.")
-            }
-            temp = first / second
-        //case "%":
-        //    temp = first % second
-        case "^":
-            temp = pow(first, second)
-        default:
-            break
-        }
-        return Matrix()
-    }
-    
-    
-    // MARK: Вычисление значения из выражения в обратной польской нотоции.
-    func calculateValue(postfixForm: String) throws -> Double {
-        var stack = [String]()
-        let elements = postfixForm.split() { $0 == " "}.map{ String($0) }
-        for element in elements {
-            if "*/^+-@".contains(element) {
-                guard let secondValue = stack.popLast(), let firstValue = stack.popLast() else {
-                    throw Exception(massage: "Invalid operand.")
-                }
-                let temp
-                stack.append(String(temp))
-            } else {
-                stack.append(element)
-            }
-        }
-        guard let last = stack.popLast(), let result = Double(last) else {
-            throw Exception(massage: "Invalid operand.")
-        }
-        return result
     }
     
     // MARK: Проверка входной строки на ошибки синтаксиса и правельности растановки скобок.
