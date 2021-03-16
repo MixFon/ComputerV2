@@ -18,6 +18,10 @@ class Rational: NSObject, TypeProtocol {
     
     // MARK: Конструктор создания нового значения из строки
     required init(expression: String) throws {
+        if expression.isEmpty {
+            self.rational = 1
+            return
+        }
         guard let value = Double(expression) else {
             throw Exception(massage: "Error create rational value.")
         }

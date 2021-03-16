@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Matrix {
+class Matrix: TypeProtocol {
     var matrix: [[Rational]]
     var rows: Int { return matrix.count }
     var colums: Int { return matrix.first?.count ?? 0}
@@ -22,7 +22,7 @@ class Matrix {
     }
     
     // MARK: Коструктора преобразования матрицу в виде строки в матрицу рациональных чисел
-    convenience init(matrix: String) throws {
+    required convenience init(expression matrix: String) throws {
         let massageError = "Invalid matrix syntax."
         var matrix = matrix
         self.init()

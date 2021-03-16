@@ -18,9 +18,11 @@ class TestsVariable: XCTestCase {
     }
     
     func testNewVariable() throws {
-        let varioble = Variable(name: "varA")
+        let variable = Variable(name: "varA")
         let matrix = try! Rational(expression: "3.5")
-        varioble.value = matrix
+        variable.value = matrix
+        //let temp = variable.value as! Rational
+        
     }
 
 }

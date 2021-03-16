@@ -13,10 +13,13 @@ struct Exception: Error {
 
 class Checker {
     
-    // MARK: Проверяет количество символов =
+    // MARK: Проверяет количество символов = и ?
     func checkCountSymbolEqual(line: String) throws {
         if line.filter({ $0 == "=" }).count != 1 {
             throw Exception(massage: "Invalid syntax. Missing character \'=\'.")
+        }
+        if line.filter({ $0 == "?" }).count > 1 {
+            throw Exception(massage: "Invalid syntax. The number of question marks not excceed 1.")
         }
     }
     
@@ -43,6 +46,28 @@ class Checker {
             throw Exception(massage: error)
         }
     }
+    
+    func checkLeftRightExpression(leftRigth: [String]) throws {
+        try checkNameValue(left: leftRigth.first!)
+        //try checkQuestionMark(right: leftRigth.last!)
+    }
+    
+    // MARK: Проверка имени переменной.
+    func checkNameValue(left: String) throws {
+        if left == "i" {
+            throw Exception(massage: "The variable name cannot be \"i\".")
+        }
+        if left.contains("?") {
+            throw Exception(massage: "Invalid syntax question mark.")
+        }
+    }
+    
+    // MARK: Проверка знака вопроса в конце строки.
+//    func checkQuestionMark(right: String) throws {
+//        if right.contains("?") && right.count != 1 {
+//            throw Exception(massage: "Invalid syntax question mark.")
+//        }
+//    }
     
     // MARK: Проверка синтаксиса строки
     public func checkLine(line: String) throws {

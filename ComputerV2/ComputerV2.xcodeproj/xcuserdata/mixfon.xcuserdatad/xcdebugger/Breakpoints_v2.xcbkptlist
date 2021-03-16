@@ -14,8 +14,8 @@
             filePath = "ComputerV2/Computer.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "130"
-            endingLineNumber = "130"
+            startingLineNumber = "223"
+            endingLineNumber = "223"
             landmarkName = "checkErrors(line:)"
             landmarkType = "7">
             <Locations>
@@ -77,8 +77,8 @@
             filePath = "ComputerV2/Computer.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "34"
-            endingLineNumber = "34"
+            startingLineNumber = "136"
+            endingLineNumber = "136"
             landmarkName = "conversionPostfixForm(infixFomr:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -93,8 +93,8 @@
             filePath = "ComputerV2/Checker.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "54"
-            endingLineNumber = "54"
+            startingLineNumber = "79"
+            endingLineNumber = "79"
             landmarkName = "checkLine(line:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -109,8 +109,8 @@
             filePath = "ComputerV2/Checker.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "55"
-            endingLineNumber = "55"
+            startingLineNumber = "80"
+            endingLineNumber = "80"
             landmarkName = "checkLine(line:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -141,8 +141,8 @@
             filePath = "TestsComputerV2/TestsComputerV2.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "61"
-            endingLineNumber = "61"
+            startingLineNumber = "62"
+            endingLineNumber = "62"
             landmarkName = "testCalculateDoubleValue()"
             landmarkType = "7">
          </BreakpointContent>
@@ -253,8 +253,8 @@
             filePath = "ComputerV2/Checker.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "92"
-            endingLineNumber = "92"
+            startingLineNumber = "117"
+            endingLineNumber = "117"
             landmarkName = "checkLine(line:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -269,8 +269,8 @@
             filePath = "ComputerV2/Checker.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "93"
-            endingLineNumber = "93"
+            startingLineNumber = "118"
+            endingLineNumber = "118"
             landmarkName = "checkLine(line:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -303,7 +303,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "32"
             endingLineNumber = "32"
-            landmarkName = "init(matrix:)"
+            landmarkName = "init(expression:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -319,7 +319,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "26"
             endingLineNumber = "26"
-            landmarkName = "init(matrix:)"
+            landmarkName = "init(expression:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -335,7 +335,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "46"
             endingLineNumber = "46"
-            landmarkName = "init(matrix:)"
+            landmarkName = "init(expression:)"
             landmarkType = "7">
             <Locations>
                <Location
@@ -448,6 +448,70 @@
             endingLineNumber = "163"
             landmarkName = "testOperatorAsterixInvalid()"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "69A05A4A-EBDE-4AB4-BBAF-FB575CBD3B23"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TestsComputerV2/TestsComputerV2.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "59"
+            endingLineNumber = "59"
+            landmarkName = "testCalculateDoubleValue()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "CB1A9F55-8FFB-47B5-8EE9-3429AEE706F8"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TestsComputerV2/TestsComputerV2.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "60"
+            endingLineNumber = "60"
+            landmarkName = "testCalculateDoubleValue()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "CB1A9F55-8FFB-47B5-8EE9-3429AEE706F8 - 470793bff1c85a58"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TestsComputerV2.TestsComputerV2.testCalculateDoubleValue() throws -&gt; ()"
+                  moduleName = "TestsComputerV2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mixfon/MyFiles/Swift/ComputerV2/ComputerV2/TestsComputerV2/TestsComputerV2.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "60"
+                  endingLineNumber = "60"
+                  offsetFromSymbolStart = "2236">
+               </Location>
+               <Location
+                  uuid = "CB1A9F55-8FFB-47B5-8EE9-3429AEE706F8 - 470793bff1c85a58"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TestsComputerV2.TestsComputerV2.testCalculateDoubleValue() throws -&gt; ()"
+                  moduleName = "TestsComputerV2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mixfon/MyFiles/Swift/ComputerV2/ComputerV2/TestsComputerV2/TestsComputerV2.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "60"
+                  endingLineNumber = "60"
+                  offsetFromSymbolStart = "3230">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -42,6 +42,7 @@ class TestsComputerV2: XCTestCase {
 
     func testCalculateDoubleValue() throws {
         let testDict = [
+            "-2+2".removeWhitespace(): 0.0,
             "1 + 3".removeWhitespace(): 4.0,
             "3 * 4".removeWhitespace(): 12.0,
             "4 / 2".removeWhitespace(): 2.0,
@@ -52,7 +53,7 @@ class TestsComputerV2: XCTestCase {
             "(21 * 2)^2-(12 * 2)^3+32*5".removeWhitespace(): -11900,
             "(32 * 2)^4*3+3".removeWhitespace(): 50331651,
             "(3^2 + 3^4)/(2^4 / 3 - 4^3*4)^2".removeWhitespace(): 0.001432350611136261,
-            "5^4^3^2".removeWhitespace(): 59604644775390625.0
+            "5^4^3^2".removeWhitespace(): 59604644775390625.0,
         ]
         for elem in testDict {
             let posfixForm = computer.conversionPostfixForm(infixFomr: elem.key)
@@ -74,12 +75,13 @@ class TestsComputerV2: XCTestCase {
             "2+ 3 *3**4".removeWhitespace(),
             "2+-3*3*4".removeWhitespace(),
             "2--3^3**4".removeWhitespace(),
-            "2+3*3+(4 + 4/0)".removeWhitespace()
+            "2+3*3+(4 + 4/0)".removeWhitespace(),
+            "++2--3^3**4".removeWhitespace()
         ]
         for elem in testString {
             let posfixForm = computer.conversionPostfixForm(infixFomr: elem)
             let result = try? computer.calculateValue(postfixForm: posfixForm)
-            XCTAssertNil(result)
+            XCTAssertNil(result, "\(elem)")
         }
     }
 

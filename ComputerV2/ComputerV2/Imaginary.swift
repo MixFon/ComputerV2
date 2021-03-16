@@ -7,7 +7,8 @@
 
 import Foundation
 
-class Imaginary {
+class Imaginary: TypeProtocol {
+    
     var im: Rational
     var re: Rational
     
@@ -16,6 +17,18 @@ class Imaginary {
     init() {
         self.im = Rational()
         self.re = Rational()
+    }
+    
+    // MARK: Конструктор создания комплексного числа из строки
+    required convenience init(expression: String) throws {
+        var expression = expression
+        self.init()
+        if expression.last == "i" {
+            expression.remove(at: expression.index(before: expression.endIndex))
+            self.im = try Rational(expression: expression)
+        } else {
+            self.re = try Rational(expression: expression)
+        }
     }
     
     init(imaginary im: Rational, rational ra: Rational) {
