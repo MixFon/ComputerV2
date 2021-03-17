@@ -12,7 +12,7 @@ class Imaginary: TypeProtocol {
     var im: Rational
     var re: Rational
     
-    var value: String { return "\(re) \(im)i" }
+    var valueType: String { return "\(re) \(im)i" }
     
     init() {
         self.im = Rational()
@@ -54,10 +54,18 @@ extension Imaginary {
     static func + (left: Imaginary, right: Imaginary) -> Imaginary {
         return Imaginary(imaginary: left.im + right.im, rational: left.re + right.re)
     }
+    
+    static func + (left: Imaginary, right: Rational) -> Imaginary {
+        return Imaginary(imaginary: left.im, rational: left.re + right)
+    }
 
     // MARK: Оператор вычитания.
     static func - (left: Imaginary, right: Imaginary) -> Imaginary {
         return Imaginary(imaginary: left.im - right.im, rational: left.re - right.re)
+    }
+    
+    static prefix func - (imaginary: Imaginary) -> Imaginary {
+        return Imaginary(imaginary: -imaginary.im , rational: -imaginary.re)
     }
 
     // MARK: Оператор умножения.
@@ -76,7 +84,6 @@ extension Imaginary {
     }
 
     // MARK: Оператор возведения в степень итеративно.
-    //infix operator ^
     static func ^ (imaginary: Imaginary, power: Int) -> Imaginary {
         var imaginatyValue = imaginary
         for _ in 1..<power {

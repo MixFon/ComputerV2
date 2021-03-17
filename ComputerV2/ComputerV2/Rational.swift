@@ -10,6 +10,8 @@ import Foundation
 class Rational: NSObject, TypeProtocol {
     var rational: Double
     
+    var valueType: String { return "\(self.rational)" }
+    
     override init() {
         self.rational = 0
     }
@@ -94,6 +96,10 @@ extension Rational {
 
     static func - (left: Rational, right: Rational) -> Rational {
         return Rational(left.rational - right.rational)
+    }
+    
+    static prefix func - (rational: Rational) -> Rational {
+        return Rational(-rational.rational)
     }
 
     static func * (left: Rational, right: Rational) -> Rational {

@@ -23,11 +23,13 @@
 		29A2022D25F2980D0071FA45 /* TestsComputerV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A2022C25F2980D0071FA45 /* TestsComputerV2.swift */; };
 		29A2023425F298580071FA45 /* Computer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291D97B825F10107006E1B8D /* Computer.swift */; };
 		29A2023525F298580071FA45 /* Checker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29198BDB25F131B500990FF4 /* Checker.swift */; };
+		29D5D7C72602240700063504 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D5D7C62602240700063504 /* Enums.swift */; };
 		29DE6ED325FFD0B500A67C5E /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DE6ED225FFD0B500A67C5E /* Variable.swift */; };
 		29DE6ED725FFD16600A67C5E /* TypeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DE6ED625FFD16600A67C5E /* TypeProtocol.swift */; };
 		29DE6EE125FFD74D00A67C5E /* TestsVariable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DE6EE025FFD74D00A67C5E /* TestsVariable.swift */; };
 		29DE6EE425FFD75900A67C5E /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DE6ED225FFD0B500A67C5E /* Variable.swift */; };
 		29DE6EE525FFD75900A67C5E /* TypeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DE6ED625FFD16600A67C5E /* TypeProtocol.swift */; };
+		29EA8CB6260260CD0042796A /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D5D7C62602240700063504 /* Enums.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -57,6 +59,7 @@
 		29A2022A25F2980D0071FA45 /* TestsComputerV2.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestsComputerV2.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		29A2022C25F2980D0071FA45 /* TestsComputerV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsComputerV2.swift; sourceTree = "<group>"; };
 		29A2022E25F2980D0071FA45 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		29D5D7C62602240700063504 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		29DE6ED225FFD0B500A67C5E /* Variable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Variable.swift; sourceTree = "<group>"; };
 		29DE6ED625FFD16600A67C5E /* TypeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeProtocol.swift; sourceTree = "<group>"; };
 		29DE6EE025FFD74D00A67C5E /* TestsVariable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsVariable.swift; sourceTree = "<group>"; };
@@ -109,6 +112,7 @@
 				2971869925F9F9660020E2DD /* Matrix.swift */,
 				29DE6ED225FFD0B500A67C5E /* Variable.swift */,
 				29DE6ED625FFD16600A67C5E /* TypeProtocol.swift */,
+				29D5D7C62602240700063504 /* Enums.swift */,
 			);
 			path = ComputerV2;
 			sourceTree = "<group>";
@@ -222,6 +226,7 @@
 				2971869A25F9F9660020E2DD /* Matrix.swift in Sources */,
 				29198BDC25F131B500990FF4 /* Checker.swift in Sources */,
 				291D97B125F0B928006E1B8D /* main.swift in Sources */,
+				29D5D7C72602240700063504 /* Enums.swift in Sources */,
 				290DBA5525F4A36600BD009A /* Rational.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -230,6 +235,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29EA8CB6260260CD0042796A /* Enums.swift in Sources */,
 				29DE6EE425FFD75900A67C5E /* Variable.swift in Sources */,
 				29DE6EE525FFD75900A67C5E /* TypeProtocol.swift in Sources */,
 				2975AB9425FB76F500F4C47A /* Matrix.swift in Sources */,

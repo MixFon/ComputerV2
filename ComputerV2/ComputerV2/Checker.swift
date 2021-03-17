@@ -99,13 +99,13 @@ class Checker {
             } else if c == "[" && c != firstChar {
                 let charBefore = line[line.index(line.startIndex, offsetBy: i - 1)]
                 let charAfter = line[line.index(line.startIndex, offsetBy: i + 1)]
-                if !"+-*;[@".contains(charBefore) || !charAfter.isNumber && charAfter != "[" {
+                if !"+-*;[(@".contains(charBefore) || !charAfter.isNumber && charAfter != "[" {
                     throw Exception(massage: "Error: \(charBefore)\(c)\(charAfter). Invalid syntax breckets.")
                 }
             } else if c == "]" && c != lastChar {
                 let charBefore = line[line.index(line.startIndex, offsetBy: i - 1)]
                 let charAfter = line[line.index(line.startIndex, offsetBy: i + 1)]
-                if !charBefore.isNumber && charBefore != "]" || !"+-*;]@".contains(charAfter){
+                if !charBefore.isNumber && charBefore != "]" || !"+-*;])@".contains(charAfter){
                     throw Exception(massage: "Error: \(charBefore)\(c)\(charAfter). Invalid syntax breckets.")
                 }
             } else if c == "(" && c != firstChar {

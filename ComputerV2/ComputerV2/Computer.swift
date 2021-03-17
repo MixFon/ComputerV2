@@ -26,8 +26,8 @@ class Computer {
             if lineWithoutSpace == "exit" { exit(0) }
             if !checkErrors(line: lineWithoutSpace) { continue }
             if !workingLine(line: lineWithoutSpace) { continue }
-            _ = conversionPostfixForm(infixFomr: lineWithoutSpace)
-            print(lineWithoutSpace)
+            //_ = conversionPostfixForm(infixFomr: lineWithoutSpace)
+            //print(lineWithoutSpace)
         }
     }
     
@@ -56,8 +56,10 @@ class Computer {
         let postfixForm = conversionPostfixForm(infixFomr: leftRight.last!)
         newVariable.value = try calculateValue(postfixForm: postfixForm)
         self.variables.append(newVariable)
-        let temp = newVariable.value as! Rational
-        print(temp.rational)
+        print(newVariable.value!.valueType)
+        //let temp = newVariable.value as! Rational
+        //print(temp.rational)
+        //a = [[23,23]]
         
     }
     
@@ -112,25 +114,29 @@ class Computer {
     
     // MARK: Выполнение арифметических операций и возаращение результата операции.
     private func workingOperatorts(element: String, first: TypeProtocol, second: TypeProtocol) throws -> TypeProtocol {
-        
-        let first = first as! Rational
-        let second = second as! Rational
+        if first.type == .imaginary && second.type == .matrix ||
+            first.type == .matrix && second.type == .imaginary {
+            throw Exception(massage: "Error. The matrix and complex number types are incompatible.")
+        }
+        //let first = first as! Rational
+        //let second = second as! Rational
         //let first = Double(firstValue)!
         //let second = Double(secondValue)!
         //var temp = TypeProtocol(expression: "[[3]]")
-        var temp = Rational()
+        var temp: TypeProtocol
+        temp = Rational()
         switch element {
         case "+":
-            temp = first + second
+            return try first + second
         case "-":
-            temp = first - second
-        case "*":
-            temp = first * second
-        case "/":
-            if second == 0 {
-                throw Exception(massage: "Division by zero.")
-            }
-            temp = try first / second
+            return try first - second
+//        case "*":
+//            temp = first * second
+//        case "/":
+//            if second == 0 {
+//                throw Exception(massage: "Division by zero.")
+//            }
+//            temp = try first / second
         //case "%":
         //    temp = first % second
         //case "^":
@@ -140,7 +146,6 @@ class Computer {
         }
         return temp
     }
-    
     
     // MARK: Вычисление значения из выражения в обратной польской нотоции.
     func calculateValue(postfixForm: String) throws -> TypeProtocol {
@@ -303,15 +308,5 @@ extension String {
     // MARK: Разделяет строку на слова по пробелам и возвращает массив слов
     func getWords() -> [String] {
         return self.split() { $0 == " " }.map{ String($0) }
-    }
-}
-
-extension Computer {
-    enum TypeVariable {
-        case rational
-        case imaginary
-        case matrix
-        case variable
-        case error
     }
 }

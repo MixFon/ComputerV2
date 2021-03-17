@@ -11,6 +11,15 @@ class Matrix: TypeProtocol {
     var matrix: [[Rational]]
     var rows: Int { return matrix.count }
     var colums: Int { return matrix.first?.count ?? 0}
+    
+    var valueType: String {
+        var result = String()
+        for row in self.matrix {
+            result.append("\(row)\n")
+        }
+        result.remove(at: result.index(before: result.endIndex))
+        return result
+    }
 
     init() {
         self.matrix = [[Rational]]()
@@ -91,6 +100,19 @@ extension Matrix {
         }
         return result
     }
+    
+    // MARK: Оператор умножения матрицы на Rational.
+    static func + (matrix: Matrix, rational: Rational) -> Matrix {
+        let result = Matrix()
+        for row in matrix.matrix {
+            var newRow = [Rational]()
+            for element in row {
+                newRow.append(element + rational)
+            }
+            result.matrix.append(newRow)
+        }
+        return result
+    }
 
     // MARK: Оператор вычитания матриц.
     static func - (left: Matrix, right: Matrix) throws -> Matrix {
@@ -104,6 +126,18 @@ extension Matrix {
                 row.append(le - ri)
             }
             result.matrix.append(row)
+        }
+        return result
+    }
+    
+    static prefix func - (matrix: Matrix) -> Matrix {
+        let result = Matrix()
+        for row in matrix.matrix {
+            var newRow = [Rational]()
+            for elem in row {
+                newRow.append(-elem)
+            }
+            result.matrix.append(newRow)
         }
         return result
     }

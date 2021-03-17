@@ -28,7 +28,8 @@ class TestsChecker: XCTestCase {
             "({})[({})]",
             "(({{[[]]}}))",
             "{}({})[]",
-            "{2+3}*({3-1})/[23^2]"
+            "{2+3}*({3-1})/[23^2]",
+            "[[3]]"
         ]
         for line in line {
             let temp: ()? = try? checker.checkBreckets(line: line)

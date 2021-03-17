@@ -26,9 +26,9 @@ class TestMatrix: XCTestCase {
     func testConstructor() throws {
         let matrixDouble = [
             [[1.0,3],[2,4],[5,7]],
-            [[1,3],[2,4]],
+            [[1,3,4,5],[2,4,6,7]],
             [[1,3]],
-            [[1,5]],
+            [[1.5]],
             [[1,3,4],[2,4,6],[1,2,3]],
             [[1],[2],[3],[4]]
         ]
@@ -41,8 +41,9 @@ class TestMatrix: XCTestCase {
                     XCTAssert(matrixD[i][j] == elem.rational, "\(matrixD[i][j]) == \(elem.rational)")
                 }
             }
-            matrix.printMatrix()
-            print(str)
+            //print(matrix.value)
+            //matrix.printMatrix()
+            //print(str)
         }
     }
     
