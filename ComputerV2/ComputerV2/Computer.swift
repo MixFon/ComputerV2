@@ -134,10 +134,12 @@ class Computer {
             return try first * second
         case "/":
             return try first / second
-        //case "%":
-        //    temp = first % second
+        case "%":
+            return try first % second
         //case "^":
         //    temp = pow(first, second)
+        case "@":
+            return try first ** second
         default:
             break
         }
@@ -149,7 +151,7 @@ class Computer {
         var stack = [TypeProtocol]()
         let elements = postfixForm.split() { $0 == " "}.map{ String($0) }
         for element in elements {
-            if "*/^+-@".contains(element) {
+            if "*/^+-%@".contains(element) {
                 guard let secondValue = stack.popLast(), let firstValue = stack.popLast() else {
                     throw Exception(massage: "Invalid operand.")
                 }

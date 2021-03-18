@@ -84,12 +84,12 @@ class TestsImaginary: XCTestCase {
     func testOperatorsDivision() throws {
         // Оператор /
         
-        imaginaryNumber = Imaginary(imaginary: 34.142, rational: 3.523) /
+        imaginaryNumber = try! Imaginary(imaginary: 34.142, rational: 3.523) /
             Imaginary(imaginary: 24.52, rational: 45.235)
         XCTAssert(Double(imaginaryNumber.im.rational) == 0.5507327151722528)
         XCTAssert(Double(imaginaryNumber.re.rational) == 0.37641132256048726)
         
-        imaginaryNumber = Imaginary(imaginary: 4.0, rational: 3.0) /
+        imaginaryNumber = try! Imaginary(imaginary: 4.0, rational: 3.0) /
             Imaginary(imaginary: 2.0, rational: 1.0)
         XCTAssert(Double(imaginaryNumber.im.rational) == -2/5)
         XCTAssert(Double(imaginaryNumber.re.rational) == 11/5)

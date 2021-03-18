@@ -147,6 +147,44 @@ func / (left: TypeProtocol, right: TypeProtocol) throws -> TypeProtocol {
     return Rational()
 }
 
+// MARK: Оператор остатака от деления.
+func % (left: TypeProtocol, right: TypeProtocol) throws -> TypeProtocol {
+    if left.type == .imaginary || right.type == .imaginary {
+        throw Exception(massage: "The remainger of the division cannot be taken from imaginary.")
+    }
+    if let rational = left as? Rational {
+        if let rationalRight = right as? Rational {
+            return try rational % rationalRight
+        }
+        if let matrix = right as? Matrix {
+           return try rational % matrix
+        }
+    }
+    if let matrix = left as? Matrix {
+        if let rational = right as? Rational {
+            return try matrix % rational
+        }
+        if let matrixRight = right as? Matrix {
+            return try matrix % matrixRight
+        }
+    }
+    return Rational()
+}
+
+// MARK: Матричное умножение M ** M (M @ M)
+func ** (left: TypeProtocol, right: TypeProtocol) throws -> TypeProtocol {
+    if left.type != .matrix || right.type != .matrix {
+        throw Exception(massage: "Error operator **. Both operands must be matrices.")
+    }
+    if let matrix = left as? Matrix {
+        if let matrixRight = right as? Matrix {
+            return try matrix ** matrixRight
+        }
+    }
+    return Rational()
+}
+
+
 func additing<T1: TypeProtocol, T2: TypeProtocol>(left: T1, right: T2) throws -> TypeProtocol {
     let one = left 
     let two = right 

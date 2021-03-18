@@ -25,6 +25,7 @@ class TestsComputerV2: XCTestCase {
 
     func testPostfixForm() throws {
         let testDict = [
+            "3 % 5".removeWhitespace(): "3 5 %" ,
             "3 + 4 * 2 / (1 - 5)^2".removeWhitespace(): "3 4 2 * 1 5 - 2 ^ / +" ,
             "(21 * 2)^42-(12 * 2)^23+32*5".removeWhitespace(): "21 2 * 42 ^ 12 2 * 23 ^ - 32 5 * +" ,
             "x ^ y / (5 * z) + 10".removeWhitespace(): "x y ^ 5 z * / 10 +" ,

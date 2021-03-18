@@ -88,13 +88,6 @@ class Rational: NSObject, TypeProtocol {
     }
 }
 
-func % (left: Rational, right: Rational) throws -> Rational {
-    if right.rational == 0 {
-        throw Exception(massage: "Division by zero.")
-    }
-    return Rational(left.rational.truncatingRemainder(dividingBy: right.rational))
-}
-
 extension Rational {
     static func + (left: Rational, right: Rational) -> Rational {
         return Rational(left.rational + right.rational)
@@ -118,6 +111,22 @@ extension Rational {
         }
         return Rational(left.rational / right.rational)
     }
+    
+   static func % (left: Rational, right: Rational) throws -> Rational {
+        if right.rational == 0 {
+            throw Exception(massage: "Division by zero.")
+        }
+        return Rational(left.rational.truncatingRemainder(dividingBy: right.rational))
+    }
+
+//    static func % (left: Rational, right: Rational) throws -> Rational {
+//        if right.rational == 0 {
+//            throw Exception(massage: "Division by zero.")
+//        }
+//        var mod = left.rational / right.rational
+//        mod = mod.rounded(.down)
+//        return Rational(left.rational - mod * right.rational)
+//    }
     
     static func ^ (number: Rational, power: Rational) -> Rational {
         return Rational(pow(number.rational, power.rational))
