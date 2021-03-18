@@ -31,56 +31,42 @@ extension TypeProtocol {
 
 // MARK: Оператор сложения классов протокола
 func + (left: TypeProtocol, right: TypeProtocol) throws -> TypeProtocol {
-    switch left.type {
-    case .rational:
-        let rational = left as! Rational
-        switch right.type {
-        case .rational:
-            let rationalRight = right as! Rational
+    if let rational = left as? Rational {
+        if let rationalRight = right as? Rational {
             return rational + rationalRight
-        case .imaginary:
-            let imaginary = right as! Imaginary
-            return imaginary + rational
-        case .matrix:
-            let matrix = right as! Matrix
-            return matrix + rational
-        default:
-            break
         }
-    case .imaginary:
-        let imaginary = left as! Imaginary
-        switch right.type {
-        case .rational:
-            let rational = right as! Rational
+        if let imaginary = right as? Imaginary {
             return imaginary + rational
-        case .imaginary:
-            let imaginaryRight = right as! Imaginary
+        }
+        if let matrix = right as? Matrix {
+            return matrix + rational
+        }
+    }
+    if let imaginary = left as? Imaginary {
+        if let rational = right as? Rational {
+            return imaginary + rational
+        }
+        if let imaginaryRight = right as? Imaginary {
             return imaginary + imaginaryRight
-        default:
-            break
         }
-    case .matrix:
-        let matrix = left as! Matrix
-        switch right.type {
-        case .rational:
-            let rational = right as! Rational
+    }
+    if let matrix = left as? Matrix {
+        if let rational = right as? Rational {
             return matrix + rational
-        case .matrix:
-            let matrixRight = right as! Matrix
-            return try matrix + matrixRight
-        default:
-            break
         }
-    default:
-        break
+        if let matrixRight = right as? Matrix {
+            return try matrix + matrixRight
+        }
     }
     return Rational()
 }
 
+// MARK: Оперетор вычитания классов протокола
 func - (left: TypeProtocol, right: TypeProtocol) throws -> TypeProtocol {
     return try left + (-right)
 }
 
+// MARK: Префексный оператор перемены знака.
 prefix func - (variable: TypeProtocol) -> TypeProtocol {
     switch variable.type {
     case .rational:
@@ -95,6 +81,70 @@ prefix func - (variable: TypeProtocol) -> TypeProtocol {
     default:
         return Rational(0)
     }
+}
+
+// MARK: Оператор умножения классов протокола.
+func * (left: TypeProtocol, right: TypeProtocol) throws -> TypeProtocol {
+    if let rational = left as? Rational {
+        if let rationalRight = right as? Rational {
+            return rational * rationalRight
+        }
+        if let imaginary = right as? Imaginary {
+            return imaginary * rational
+        }
+        if let  matrix = right as? Matrix {
+            return matrix * rational
+        }
+    }
+    if let imaginary = left as? Imaginary {
+        if let rational = right as? Rational {
+            return imaginary * rational
+        }
+        if let imaginatyRight = right as? Imaginary {
+            return imaginary * imaginatyRight
+        }
+    }
+    if let matrix = left as? Matrix {
+        if let rational = right as? Rational {
+            return matrix * rational
+        }
+        if let matrixRight = right as? Matrix {
+            return try matrix * matrixRight
+        }
+    }
+    return Rational()
+}
+
+// MARK: Оператор деления классов протоколов
+func / (left: TypeProtocol, right: TypeProtocol) throws -> TypeProtocol {
+    if let rational = left as? Rational {
+        if let rationalRight = right as? Rational{
+            return try rational / rationalRight
+        }
+        if let imaginary = right as? Imaginary {
+            return try Imaginary(imaginary: Rational(), rational: rational) / imaginary
+        }
+        if let matrix = right as? Matrix {
+            return try rational / matrix
+        }
+    }
+    if let imaginary = left as? Imaginary {
+        if let rational = right as? Rational {
+            return try imaginary / Imaginary(imaginary: Rational(), rational: rational)
+        }
+        if let imaginaryRight = right as? Imaginary {
+            return try imaginary / imaginaryRight
+        }
+    }
+    if let matrix = left as? Matrix {
+        if let rational = right as? Rational {
+            return try matrix / rational
+        }
+        if let matrixRight = right as? Matrix {
+            return try matrix / matrixRight
+        }
+    }
+    return Rational()
 }
 
 func additing<T1: TypeProtocol, T2: TypeProtocol>(left: T1, right: T2) throws -> TypeProtocol {

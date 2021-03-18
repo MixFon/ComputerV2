@@ -98,8 +98,8 @@ class Checker {
                 }
             } else if c == "[" && c != firstChar {
                 let charBefore = line[line.index(line.startIndex, offsetBy: i - 1)]
-                let charAfter = line[line.index(line.startIndex, offsetBy: i + 1)]
-                if !"+-*;[(@".contains(charBefore) || !charAfter.isNumber && charAfter != "[" {
+                let charAfter = line[line.index(line.startIndex, offsetBy: i + 1)]//
+                if !"+-*;[(@".contains(charBefore) || !charAfter.isNumber && !"[+-".contains(charAfter) {
                     throw Exception(massage: "Error: \(charBefore)\(c)\(charAfter). Invalid syntax breckets.")
                 }
             } else if c == "]" && c != lastChar {
@@ -111,7 +111,7 @@ class Checker {
             } else if c == "(" && c != firstChar {
                 let charBefore = line[line.index(line.startIndex, offsetBy: i - 1)]
                 let charAfter = line[line.index(line.startIndex, offsetBy: i + 1)]
-                if !"+-*/^%(@".contains(charBefore) || "+-*/^%@".contains(charAfter) {
+                if !"+-*/^%(@".contains(charBefore) || "*/^%@".contains(charAfter) {
                     throw Exception(massage: "Error: \(charBefore)\(c)\(charAfter). Invalid syntax breckets.")
                 }
             } else if c == ")" && c != lastChar {
@@ -124,7 +124,7 @@ class Checker {
             if "+-^*/%.,@".contains(c) {
                 let charBefore = line[line.index(line.startIndex, offsetBy: i - 1)]
                 let charAfter = line[line.index(line.startIndex, offsetBy: i + 1)]
-                if "+-^*/%.,([@".contains(charBefore) || "+-^*/%.,)]@".contains(charAfter){
+                if "+-^*/%.,([@".contains(charBefore) && !"-+".contains(c) || "+-^*/%.,)]@".contains(charAfter){
                     throw Exception(massage: "Error: \(charBefore)\(c)\(charAfter). Invalid syntax operators.")
                 }
             }

@@ -11,6 +11,12 @@ class Rational: NSObject, TypeProtocol {
     var rational: Double
     
     var valueType: String { return "\(self.rational)" }
+    //var valueType: String { return "\(self.fraction)" }
+    
+    var fraction: String {
+        let fraction = getNumeratorDenuminator(self.rational)
+        return "\(fraction.0)/\(fraction.1)"
+    }
     
     override init() {
         self.rational = 0
@@ -58,7 +64,7 @@ class Rational: NSObject, TypeProtocol {
         let sign = Double(numerator) / Double(denominator)
         var num = abs(numerator)
         var den = abs(denominator)
-        let nod = nodNunbers(one: numerator, two: denominator)
+        let nod = nodNunbers(one: num, two: den)
         num /= nod
         den /= nod
         if sign < 0 {
@@ -132,8 +138,6 @@ extension Rational {
     static func != (left: Rational, right: Rational) -> Bool {
         return !(left == right)
     }
-
-    
 }
 
 func sqrt(rational: Rational) -> Rational {

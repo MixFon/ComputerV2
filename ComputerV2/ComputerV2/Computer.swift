@@ -18,7 +18,7 @@ class Computer {
     func run() {
         while true {
             print("> ", terminator: "")
-            guard var line = readLine() else { continue }
+            guard var line = readLine() else { print(); break }
             line = line.lowercased()
             var lineWithoutSpace = line.replace(string: "**", replacement: "@")
             lineWithoutSpace = lineWithoutSpace.removeWhitespace()
@@ -130,13 +130,10 @@ class Computer {
             return try first + second
         case "-":
             return try first - second
-//        case "*":
-//            temp = first * second
-//        case "/":
-//            if second == 0 {
-//                throw Exception(massage: "Division by zero.")
-//            }
-//            temp = try first / second
+        case "*":
+            return try first * second
+        case "/":
+            return try first / second
         //case "%":
         //    temp = first % second
         //case "^":

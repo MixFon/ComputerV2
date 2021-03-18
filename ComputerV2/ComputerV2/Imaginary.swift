@@ -12,7 +12,7 @@ class Imaginary: TypeProtocol {
     var im: Rational
     var re: Rational
     
-    var valueType: String { return "\(re) \(im)i" }
+    var valueType: String { return "\(re.fraction) \(im.fraction)i" }
     
     init() {
         self.im = Rational()
@@ -74,12 +74,18 @@ extension Imaginary {
         let rational = left.re * right.re - left.im * right.im
         return Imaginary(imaginary: imaginary, rational: rational)
     }
+    
+    static func * (left: Imaginary, right: Rational) -> Imaginary {
+        let imaginary = left.re * right
+        let rational = left.re * right
+        return Imaginary(imaginary: imaginary, rational: rational)
+    }
 
     // MARK: Оператор деления.
-    static func / (left: Imaginary, right: Imaginary) -> Imaginary {
+    static func / (left: Imaginary, right: Imaginary) throws -> Imaginary {
         let squere = right.re * right.re + right.im * right.im
-        let imaginary = try! (left.im * right.re - left.re * right.im) / squere
-        let rational = try! (left.re * right.re + left.im * right.im ) / squere
+        let imaginary = try (left.im * right.re - left.re * right.im) / squere
+        let rational = try (left.re * right.re + left.im * right.im ) / squere
         return Imaginary(imaginary: imaginary, rational: rational)
     }
 

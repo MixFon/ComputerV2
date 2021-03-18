@@ -186,6 +186,49 @@ extension Matrix {
         print(result.printMatrix())
         return result
     }
+    
+    // MARK: Оператор деления матрицы на матрицу term-to-term. M / M
+    static func / (left: Matrix, right: Matrix) throws -> Matrix {
+        if left.rows != right.rows || left.colums != right.colums {
+            throw Exception(massage: "Error: Matrices of different dimention.")
+        }
+        let result = Matrix()
+        for (left, right) in zip(left.matrix, right.matrix) {
+            var row = [Rational]()
+            for (le, ri) in zip(left, right) {
+                row.append(try le / ri)
+            }
+            result.matrix.append(row)
+        }
+        return result
+    }
+    
+    // MARK: Оператор деления числа на матрицу R / M.
+    static func / (rational: Rational, matrix: Matrix) throws -> Matrix {
+        let result = Matrix()
+        for row in matrix.matrix {
+            var newRow = [Rational]()
+            for element in row {
+                newRow.append(try rational / element)
+            }
+            result.matrix.append(newRow)
+        }
+        return result
+    }
+    
+    // MARK: Оператор деления матрицы на число M / R.
+    static func / (matrix: Matrix, rational: Rational) throws -> Matrix {
+        let result = Matrix()
+        for row in matrix.matrix {
+            var newRow = [Rational]()
+            for element in row {
+                newRow.append(try element / rational)
+            }
+            result.matrix.append(newRow)
+        }
+        return result
+    }
+    
 
     static func getSummRowsColums(left: [[Rational]], right: [[Rational]], i: Int, j: Int) -> Rational{
         var summ = Rational()
