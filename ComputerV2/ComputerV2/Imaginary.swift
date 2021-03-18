@@ -90,9 +90,18 @@ extension Imaginary {
     }
 
     // MARK: Оператор возведения в степень итеративно.
-    static func ^ (imaginary: Imaginary, power: Int) -> Imaginary {
+    static func ^ (imaginary: Imaginary, power: Rational) throws -> Imaginary {
+        var numerator: Int
+        var denominator: Int
+        (numerator, denominator) = power.getNumeratorDenuminator(power.rational)
+        if numerator <= 0 {
+            throw Exception(massage: "The degree must not be negative or zero.")
+        }
+        if denominator != 1 {
+            throw Exception(massage: "The degree is not an integer.")
+        }
         var imaginatyValue = imaginary
-        for _ in 1..<power {
+        for _ in 1..<numerator {
             imaginatyValue = imaginatyValue * imaginary
         }
         return imaginatyValue

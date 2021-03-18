@@ -184,6 +184,30 @@ func ** (left: TypeProtocol, right: TypeProtocol) throws -> TypeProtocol {
     return Rational()
 }
 
+func ^ (left: TypeProtocol, right: TypeProtocol) throws -> TypeProtocol {
+    if right.type != .rational {
+        throw Exception(massage: "The degree must be a positive integer.")
+    }
+    let degree = right as! Rational
+    var numerator, denuminator: Int
+    (numerator, denuminator) = degree.getNumeratorDenuminator(degree.rational)
+    if numerator <= 0 {
+        throw Exception(massage: "The degree must not be negative or zero.")
+    }
+    if denuminator != 1 {
+        throw Exception(massage: "The degree is not an integer.")
+    }
+    if let rational = left as? Rational {
+        return try rational ^ degree
+    }
+    if let imaginary = left as? Imaginary {
+        return try imaginary ^ degree
+    }
+    if let matrix = left as? Matrix {
+        return try matrix ^ degree
+    }
+    return Rational()
+}
 
 func additing<T1: TypeProtocol, T2: TypeProtocol>(left: T1, right: T2) throws -> TypeProtocol {
     let one = left 

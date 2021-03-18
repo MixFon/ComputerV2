@@ -228,6 +228,7 @@ extension Matrix {
         }
         return result
     }
+    
     // MARK: Оператор деления с остатком матрицы на матрицу term-to-term. M % M
     static func % (left: Matrix, right: Matrix) throws -> Matrix {
         if left.rows != right.rows || left.colums != right.colums {
@@ -270,6 +271,18 @@ extension Matrix {
         return result
     }
     
+    // MARK: Оператор возведения матрицы в степень term-to-term.
+    static func ^ (matrix: Matrix, rational: Rational) throws -> Matrix {
+        let result = Matrix()
+        for row in matrix.matrix {
+            var newRow = [Rational]()
+            for element in row {
+                newRow.append(try element ^ rational)
+            }
+            result.matrix.append(newRow)
+        }
+        return result
+    }
 
     static func getSummRowsColums(left: [[Rational]], right: [[Rational]], i: Int, j: Int) -> Rational{
         var summ = Rational()

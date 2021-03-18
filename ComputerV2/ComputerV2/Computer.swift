@@ -118,13 +118,6 @@ class Computer {
             first.type == .matrix && second.type == .imaginary {
             throw Exception(massage: "Error. The matrix and complex number types are incompatible.")
         }
-        //let first = first as! Rational
-        //let second = second as! Rational
-        //let first = Double(firstValue)!
-        //let second = Double(secondValue)!
-        //var temp = TypeProtocol(expression: "[[3]]")
-        var temp: TypeProtocol
-        temp = Rational()
         switch element {
         case "+":
             return try first + second
@@ -136,14 +129,14 @@ class Computer {
             return try first / second
         case "%":
             return try first % second
-        //case "^":
-        //    temp = pow(first, second)
+        case "^":
+            return try first ^ second
         case "@":
             return try first ** second
         default:
             break
         }
-        return temp
+        return Rational(Double.nan)
     }
     
     // MARK: Вычисление значения из выражения в обратной польской нотоции.
@@ -215,12 +208,17 @@ class Computer {
         if variable.isEmpty {
             return false
         }
-        for c in variable {
-            if !c.isNumber && c != "." {
-                return false
-            }
+        if let _ = Double(variable) {
+            return true
+        } else {
+            return false
         }
-        return true
+//        for c in variable {
+//            if !c.isNumber && c != "." {
+//                return false
+//            }
+//        }
+//        return true
     }
     
     // MARK: Определяет, является ли строка комплексным числом.
@@ -289,17 +287,21 @@ extension String {
         let line = self
         var string = String()
         var coutnBreckets = 0
+        var prev = "("
         for char in line {
             if char == "[" {
                 coutnBreckets += 1
             } else if char == "]" {
                 coutnBreckets -= 1
             }
-            if "+-*/%()^@".contains(char) && coutnBreckets == 0 {
+            if "+-".contains(char) && prev == "(" {
+                string += " \(char)"
+            } else if "+-*/%()^@".contains(char) && coutnBreckets == 0 {
                 string += " \(char) "
             } else {
                 string += String(char)
             }
+            prev = String(char)
         }
         return string
     }

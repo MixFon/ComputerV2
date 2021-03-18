@@ -112,29 +112,43 @@ extension Rational {
         return Rational(left.rational / right.rational)
     }
     
-   static func % (left: Rational, right: Rational) throws -> Rational {
-        if right.rational == 0 {
-            throw Exception(massage: "Division by zero.")
-        }
-        return Rational(left.rational.truncatingRemainder(dividingBy: right.rational))
-    }
-
-//    static func % (left: Rational, right: Rational) throws -> Rational {
+//   static func % (left: Rational, right: Rational) throws -> Rational {
 //        if right.rational == 0 {
 //            throw Exception(massage: "Division by zero.")
 //        }
-//        var mod = left.rational / right.rational
-//        mod = mod.rounded(.down)
-//        return Rational(left.rational - mod * right.rational)
+//        return Rational(left.rational.truncatingRemainder(dividingBy: right.rational))
 //    }
+
+    static func % (left: Rational, right: Rational) throws -> Rational {
+        if right.rational == 0 {
+            throw Exception(massage: "Division by zero.")
+        }
+        var mod = left.rational / right.rational
+        mod = mod.rounded(.down)
+        return Rational(left.rational - mod * right.rational)
+    }
     
-    static func ^ (number: Rational, power: Rational) -> Rational {
-        return Rational(pow(number.rational, power.rational))
+    static func ^ (rational: Rational, power: Rational) throws -> Rational {
+        var numerator: Int
+        var denominator: Int
+        (numerator, denominator) = power.getNumeratorDenuminator(power.rational)
+        if numerator <= 0 {
+            throw Exception(massage: "The degree must not be negative or zero.")
+        }
+        if denominator != 1 {
+            throw Exception(massage: "The degree is not an integer.")
+        }
+        var rationalValue = rational
+        for _ in 1..<numerator {
+            rationalValue = rationalValue * rational
+        }
+        return rationalValue
+        //return Rational(pow(number.rational, power.rational))
     }
 
-    static func ^ (number: Rational, power: Double) -> Rational {
-        return Rational(pow(number.rational, power))
-    }
+//    static func ^ (number: Rational, power: Double) -> Rational {
+//        return Rational(pow(number.rational, power))
+//    }
 
     static func == (left: Rational, right: Rational) -> Bool {
         return left.rational == right.rational
