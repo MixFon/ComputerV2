@@ -125,7 +125,16 @@ class TestRational: XCTestCase {
         one = Rational(7.9)
         two = Rational(2.1)
         three = try! one % two
-        XCTAssert(three! == Rational(1.6))
+        print(three.fraction)
+        print(three.rational)
+        XCTAssert(three! == Rational(1.5999999999999996))
+        
+        one = Rational(3.5)
+        two = Rational(1.3)
+        three = try! one % two
+        print(three.fraction)
+        print(three.rational)
+        XCTAssert(three! == Rational(0.8999999999999999))
         
         one = Rational(4.0)
         two = Rational(3.0)
@@ -142,31 +151,27 @@ class TestRational: XCTestCase {
         // Оператор ^
         one = Rational(4.0)
         two = Rational(3.0)
-        three = one ^ two
+        three = try! one ^ two
         XCTAssert(three! == Rational(64.0))
         
         one = Rational(4.3)
         two = Rational(2.0)
-        three = one ^ two
+        three = try! one ^ two
         XCTAssert(three! == Rational(18.49))
         
         one = Rational(4.0)
         two = Rational(3.0)
-        three = one ^ two
+        three = try! one ^ two
         XCTAssert(three! == Rational(64.0))
         
         one = Rational(43.3)
         two = Rational(3.0)
-        three = one ^ two
-        XCTAssert(three! == Rational(81182.73699999998))
-        
-        one = Rational(43.3)
-        three = one ^ 3
+        three = try! one ^ two
         XCTAssert(three! == Rational(81182.73699999998))
         
         one = Rational(123.415)
         two = Rational(4.0)
-        three = one ^ two
+        three = try! one ^ two
         print(three!)
         XCTAssert(three!.rational == 231991348.966712)
     }

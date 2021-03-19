@@ -83,7 +83,6 @@ class TestsImaginary: XCTestCase {
     }
     func testOperatorsDivision() throws {
         // Оператор /
-        
         imaginaryNumber = try! Imaginary(imaginary: 34.142, rational: 3.523) /
             Imaginary(imaginary: 24.52, rational: 45.235)
         XCTAssert(Double(imaginaryNumber.im.rational) == 0.5507327151722528)
@@ -97,28 +96,28 @@ class TestsImaginary: XCTestCase {
     
     func testOperatorsPow() throws {
         // Оператор ^
-        imaginaryNumber = Imaginary(imaginary: 4.0, rational: 3.0) ^ 2
+        imaginaryNumber = try! Imaginary(imaginary: 4.0, rational: 3.0) ^ Rational(2)
         XCTAssert(imaginaryNumber == Imaginary(imaginary: Rational(24), rational: Rational(-7)))
         
-        imaginaryNumber = Imaginary(imaginary: 4.0, rational: 3.0) ^ 3
+        imaginaryNumber = try! Imaginary(imaginary: 4.0, rational: 3.0) ^ Rational(3)
         XCTAssert(imaginaryNumber == Imaginary(imaginary: Rational(44), rational: Rational(-117)))
         
-        imaginaryNumber = Imaginary(imaginary: 4.0, rational: 3.0) ^ 4
+        imaginaryNumber = try! Imaginary(imaginary: 4.0, rational: 3.0) ^ Rational(4)
         XCTAssert(imaginaryNumber == Imaginary(imaginary: Rational(-336), rational: Rational(-527)))
         
-        imaginaryNumber = Imaginary(imaginary: 12.42, rational: 657.234) ^ 2
+        imaginaryNumber = try! Imaginary(imaginary: 12.42, rational: 657.234) ^ Rational(2)
         XCTAssert(imaginaryNumber.im.rational == 16325.692560000001)
         XCTAssert(imaginaryNumber.re.rational == 431802.274356)
         
-        imaginaryNumber = Imaginary(imaginary: 12.42, rational: 657.234) ^ 3
+        imaginaryNumber =  try!Imaginary(imaginary: 12.42, rational: 657.234) ^ Rational(3)
         XCTAssert(imaginaryNumber.im.rational == 16092784.471480561)
         XCTAssert(imaginaryNumber.re.rational == 283592370.8824961)
         
-        imaginaryNumber = Imaginary(imaginary: 12.42, rational: 657.234) ^ 23
+        imaginaryNumber = try! Imaginary(imaginary: 12.42, rational: 657.234) ^ Rational(23)
         XCTAssert(imaginaryNumber.im.rational == 2.714336730240357e+64)
         XCTAssert(imaginaryNumber.re.rational == 5.847522507775276e+64)
         
-        imaginaryNumber = Imaginary(imaginary: 12.42, rational: 657.234) ^ 10
+        imaginaryNumber = try! Imaginary(imaginary: 12.42, rational: 657.234) ^ Rational(10)
         XCTAssert(imaginaryNumber.im.rational == 2.8296850655544243e+27)
         XCTAssert(imaginaryNumber.re.rational == 1.4797087596813364e+28)
         

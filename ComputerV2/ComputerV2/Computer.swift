@@ -46,16 +46,16 @@ class Computer {
         return true
     }
     
-    // MARK: Создание новой переменной и добавления в список переменных.
+    // MARK: Создание или обновление переменной и добавления в список переменных.
     private func addVariable(line: String) throws {
         let leftRight = line.split() { $0 == "=" }.map { String($0) }
         let nameVariable = leftRight.first!
         try checkValidName(name: nameVariable)
-        // Создавать после вычисления значения переменной.
         let newVariable = Variable(name: nameVariable)
+        print(nameVariable)
         let postfixForm = conversionPostfixForm(infixFomr: leftRight.last!)
         newVariable.value = try calculateValue(postfixForm: postfixForm)
-        self.variables.append(newVariable)
+        updateVariables(newVariable: newVariable)
         print(newVariable.value!.valueType)
         //let temp = newVariable.value as! Rational
         //print(temp.rational)
@@ -63,13 +63,30 @@ class Computer {
         
     }
     
-    // MARK: Проверка имени переменной и функции. Имя не должно содержать цифр.
+    // MARK: Проверка имени переменной и функции. Имя не должно содержать цифр и операторов. И должны быть одни ()
     private func checkValidName(name: String) throws {
+        if name.filter({$0 == "("}).count > 1 {
+            throw Exception(massage: "Invalid name function.")
+        }
         for c in name {
             if c.isNumber {
                 throw Exception(massage: "The name of a variable or function must not contain numbers.")
             }
+            if "-+/*^@.%[".contains(c) {
+                throw Exception(massage: "The name of a variable contains an invalid character: \(c)")
+            }
         }
+    }
+    
+    // MARK: Если переменная уже была создана - заменяем на новую, нет - добавляем новую.
+    private func updateVariables(newVariable: Variable) {
+        for (i, variable) in self.variables.enumerated() {
+            if variable.name == newVariable.name {
+                self.variables.remove(at: i)
+                break
+            }
+        }
+        self.variables.append(newVariable)
     }
     
     // MARK: Перевод строки в постфиксную форму.
@@ -143,10 +160,11 @@ class Computer {
     func calculateValue(postfixForm: String) throws -> TypeProtocol {
         var stack = [TypeProtocol]()
         let elements = postfixForm.split() { $0 == " "}.map{ String($0) }
+        print(elements)
         for element in elements {
             if "*/^+-%@".contains(element) {
                 guard let secondValue = stack.popLast(), let firstValue = stack.popLast() else {
-                    throw Exception(massage: "Invalid operand.")
+                    throw Exception(massage: "Invalid operand: \(element)")
                 }
                 let resultOperation = try workingOperatorts(element: element, first: firstValue, second: secondValue)
                 stack.append(resultOperation)
@@ -286,22 +304,38 @@ extension String {
     func addSpace() -> String {
         let line = self
         var string = String()
-        var coutnBreckets = 0
-        var prev = "("
+        var coutnSquareBreckets = 0
+        var countRoundBrackes = 0
+        var countFunction = 0
+        var prev: Character = "("
         for char in line {
             if char == "[" {
-                coutnBreckets += 1
+                coutnSquareBreckets += 1
             } else if char == "]" {
-                coutnBreckets -= 1
+                coutnSquareBreckets -= 1
+            }
+            if char == "(" && prev.isLetter {
+                countFunction += 1
+            } else if char == ")" && countRoundBrackes == 0 && countFunction != 0 {
+                countFunction -= 1
+                if countFunction == 0 {
+                    string += String(char)
+                    prev = char
+                    continue
+                }
+            } else if char == "(" && countFunction != 0 {
+                countRoundBrackes += 1
+            } else if char == ")" && countFunction != 0 {
+                countRoundBrackes -= 1
             }
             if "+-".contains(char) && prev == "(" {
                 string += " \(char)"
-            } else if "+-*/%()^@".contains(char) && coutnBreckets == 0 {
+            } else if "+-*/%()^@".contains(char) && coutnSquareBreckets == 0 && countFunction == 0 {
                 string += " \(char) "
             } else {
                 string += String(char)
             }
-            prev = String(char)
+            prev = Character(extendedGraphemeClusterLiteral: char)
         }
         return string
     }

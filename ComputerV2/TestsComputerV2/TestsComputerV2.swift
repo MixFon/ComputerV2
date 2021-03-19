@@ -95,5 +95,23 @@ class TestsComputerV2: XCTestCase {
         let temp2 = try! additing(left: matrix, right: rational)
         print(temp2.valueType)
     }
+    
+    func testAddSpace() throws {
+        var extention = "3+4*5+funA(12*(3+4)*funB(4^(3+5)))+4"
+        XCTAssert(extention.addSpace() == "3 + 4 * 5 + funA(12*(3+4)*funB(4^(3+5))) + 4")
+        extention = "3+fanA(3+3)"
+        XCTAssert(extention.addSpace() == "3 + fanA(3+3)")
+        extention = "3*(3+fanA(3+3))"
+        print(extention.addSpace())
+        XCTAssert(extention.addSpace() == "3 *  ( 3 + fanA(3+3) ) ")
+        extention = "funA(2+funB(3+4)+5)"
+        XCTAssert(extention.addSpace() == "funA(2+funB(3+4)+5)")
+        extention = "funA(2+(5-2)+funB(3*(2+3)))"
+        XCTAssert(extention.addSpace() == "funA(2+(5-2)+funB(3*(2+3)))")
+        extention = "3*(3+3*(2*funA((3+2)*4+((3+3)*3))))"
+        XCTAssert(extention.addSpace() == "3 *  ( 3 + 3 *  ( 2 * funA((3+2)*4+((3+3)*3)) )  ) ")
+        extention = "3*(3+3*(2*funA((3+2)*4+((3+3)*3))))+funB((3+4)*3)+3"
+        XCTAssert(extention.addSpace() == "3 *  ( 3 + 3 *  ( 2 * funA((3+2)*4+((3+3)*3)) )  )  + funB((3+4)*3) + 3")
+    }
 
 }
