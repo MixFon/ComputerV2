@@ -12,5 +12,6 @@ enum TypeVariable {
     case imaginary
     case matrix
     case variable
+    case function
     case error
 }

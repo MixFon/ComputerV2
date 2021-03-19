@@ -52,7 +52,6 @@ class Computer {
         let nameVariable = leftRight.first!
         try checkValidName(name: nameVariable)
         let newVariable = Variable(name: nameVariable)
-        print(nameVariable)
         let postfixForm = conversionPostfixForm(infixFomr: leftRight.last!)
         newVariable.value = try calculateValue(postfixForm: postfixForm)
         updateVariables(newVariable: newVariable)
@@ -198,10 +197,30 @@ class Computer {
                     return value
                 }
             }
+        case .function:
+            let nameFunction: String
+            let argumentFunctions: String
+            (nameFunction, argumentFunctions) = try splitNameArgumenrFunction(function: variable)
+            // Получить значение аргумента. Оно должно быть Rationlan
+            // Подставить полученное значение вместо переменной в функции. Вычислить его.
+            // Результат вычисления тоже должен быть Rational
         default:
             throw Exception(massage: "Invalid value: \(variable)")
         }
         return Rational()
+    }
+    
+    func splitNameArgumenrFunction(function: String) throws -> (String, String) {
+        var function = function
+        function.remove(at: function.index(before: function.endIndex))
+        guard let indexBrecket = function.firstIndex(of: "(") else {
+            throw Exception(massage: "Error in splitting the function name and argument.")
+        }
+        let indexBefore = function.index(before: indexBrecket)
+        let indexAfter = function.index(after: indexBrecket)
+        let name = function[...indexBefore]
+        let argument = function[indexAfter...]
+        return (String(name), String(argument))
     }
     
     // MARK: Определить тип: рациональное число, комплекское, матрица, существующая переменая, ошибка.
@@ -216,7 +235,11 @@ class Computer {
             return .matrix
         }
         if isExistingVariable(variable: variable) {
-            return .variable
+            if variable.contains("(") {
+                return .function
+            } else {
+                return .variable
+            }
         }
         return .error
     }

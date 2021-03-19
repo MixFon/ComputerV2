@@ -113,5 +113,14 @@ class TestsComputerV2: XCTestCase {
         extention = "3*(3+3*(2*funA((3+2)*4+((3+3)*3))))+funB((3+4)*3)+3"
         XCTAssert(extention.addSpace() == "3 *  ( 3 + 3 *  ( 2 * funA((3+2)*4+((3+3)*3)) )  )  + funB((3+4)*3) + 3")
     }
+    
+    func testSplitNameArgument() throws {
+        var extention = "fun(a)"
+        XCTAssert(try! computer.splitNameArgumenrFunction(function: extention) == ("fun", "a"))
+        extention = "fun(3+a*(3+4))"
+        XCTAssert(try! computer.splitNameArgumenrFunction(function: extention) == ("fun", "3+a*(3+4)"))
+        extention = "fun(funB(a)+a*(3+4))"
+        XCTAssert(try! computer.splitNameArgumenrFunction(function: extention) == ("fun", "funB(a)+a*(3+4)"))
+    }
 
 }
