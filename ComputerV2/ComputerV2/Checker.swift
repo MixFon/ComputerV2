@@ -48,8 +48,15 @@ class Checker {
     }
     
     func checkLeftRightExpression(leftRigth: [String]) throws {
+        try checkCountExpression(leftRight: leftRigth)
         try checkNameValue(left: leftRigth.first!)
         //try checkQuestionMark(right: leftRigth.last!)
+    }
+    
+    private func checkCountExpression(leftRight: [String]) throws {
+        if leftRight.count != 2 {
+            throw Exception(massage: "Ivarid value expression.")
+        }
     }
     
     // MARK: Проверка имени переменной.

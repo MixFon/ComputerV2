@@ -48,18 +48,42 @@ class Computer {
     
     // MARK: Создание или обновление переменной и добавления в список переменных.
     private func addVariable(line: String) throws {
+        for v in self.variables {
+            print(v.name)
+        }
         let leftRight = line.split() { $0 == "=" }.map { String($0) }
         let nameVariable = leftRight.first!
         try checkValidName(name: nameVariable)
-        let newVariable = Variable(name: nameVariable)
-        let postfixForm = conversionPostfixForm(infixFomr: leftRight.last!)
-        newVariable.value = try calculateValue(postfixForm: postfixForm)
+        let newVariable: Variable
+        // Поставить проврку на то является ли переменная функцией
+        if isFunction(variable: nameVariable) {
+            let nameFunction: String
+            let argumentFunctions: String
+            (nameFunction, argumentFunctions) = try splitNameArgumenrFunction(function: nameVariable)
+            try checkArgumentFunction(argument: argumentFunctions)
+            // сделать проверку на то чтобы аргумент состоял только из букв!!!
+            newVariable = Variable(name: nameFunction + "()")
+            newVariable.value = Function(argument: argumentFunctions, expression: leftRight.last!)
+        } else {
+            newVariable = Variable(name: nameVariable)
+            let postfixForm = conversionPostfixForm(infixFomr: leftRight.last!)
+            newVariable.value = try calculateValue(postfixForm: postfixForm)
+        }
         updateVariables(newVariable: newVariable)
         print(newVariable.value!.valueType)
         //let temp = newVariable.value as! Rational
         //print(temp.rational)
         //a = [[23,23]]
         
+    }
+    
+    // MARK: Проверяет аргумент на доступность. Имя аргумента не должно совпадать и именами переменных.
+    private func checkArgumentFunction(argument: String) throws {
+        for variable in self.variables {
+            if variable.name == argument {
+                throw Exception(massage: "Error name argument: \(argument). The argument name mist not match the name of an existing variable.")
+            }
+        }
     }
     
     // MARK: Проверка имени переменной и функции. Имя не должно содержать цифр и операторов. И должны быть одни ()
@@ -201,7 +225,9 @@ class Computer {
             let nameFunction: String
             let argumentFunctions: String
             (nameFunction, argumentFunctions) = try splitNameArgumenrFunction(function: variable)
-            // Получить значение аргумента. Оно должно быть Rationlan
+            let postfixForm = conversionPostfixForm(infixFomr: argumentFunctions)
+            let intermediateVatiable = try calculateValue(postfixForm: postfixForm)
+            // Получить значение аргумента. Оно должно быть Rational (не обязательно)
             // Подставить полученное значение вместо переменной в функции. Вычислить его.
             // Результат вычисления тоже должен быть Rational
         default:
@@ -210,6 +236,7 @@ class Computer {
         return Rational()
     }
     
+    // MARK: Разделяет имя функции и ее аргумент на две строки и возвращвет в виде кортежа.
     func splitNameArgumenrFunction(function: String) throws -> (String, String) {
         var function = function
         function.remove(at: function.index(before: function.endIndex))
@@ -220,6 +247,9 @@ class Computer {
         let indexAfter = function.index(after: indexBrecket)
         let name = function[...indexBefore]
         let argument = function[indexAfter...]
+        if argument.isEmpty {
+            throw Exception(massage: "The function argument is missing.")
+        }
         return (String(name), String(argument))
     }
     
@@ -235,13 +265,18 @@ class Computer {
             return .matrix
         }
         if isExistingVariable(variable: variable) {
-            if variable.contains("(") {
+            if  isFunction(variable: variable){
                 return .function
             } else {
                 return .variable
             }
         }
         return .error
+    }
+    
+    // MARK: Определяем является ли переданное имя переменной имемен функции. Содержит ли ()
+    private func isFunction(variable: String) -> Bool {
+        return variable.contains("(") && variable.last == ")"
     }
     
     // MARK: Определяет, является ли строка рациональным числом.

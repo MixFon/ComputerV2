@@ -10,14 +10,20 @@ import Foundation
 class Function: TypeProtocol {
     
     var expression: String
+    var argument: String
     
     required init(expression: String) throws {
         self.expression = expression
+        self.argument = String()
+    }
+    
+    init(argument: String, expression: String) {
+        self.expression = expression
+        self.argument = argument
     }
     
     var valueType: String {
         return self.expression
     }
-    
     
 }
