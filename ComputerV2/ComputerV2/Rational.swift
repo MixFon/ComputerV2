@@ -10,8 +10,10 @@ import Foundation
 class Rational: NSObject, TypeProtocol {
     var rational: Double
     
-    var valueType: String { return "\(self.rational)" }
+    var valueType: String { return String(format: "%g", self.rational) }
     //var valueType: String { return "\(self.fraction)" }
+    
+    var syntaxValueType: String { return String(format: "%+g", self.rational)}
     
     var fraction: String {
         let fraction = getNumeratorDenuminator(self.rational)
@@ -129,11 +131,14 @@ extension Rational {
     }
     
     static func ^ (rational: Rational, power: Rational) throws -> Rational {
+        if power.rational == 0 {
+            return Rational(1)
+        }
         var numerator: Int
         var denominator: Int
         (numerator, denominator) = power.getNumeratorDenuminator(power.rational)
-        if numerator <= 0 {
-            throw Exception(massage: "The degree must not be negative or zero.")
+        if numerator < 0 {
+            throw Exception(massage: "The degree must not be negative.")
         }
         if denominator != 1 {
             throw Exception(massage: "The degree is not an integer.")

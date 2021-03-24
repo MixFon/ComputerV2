@@ -8,9 +8,10 @@
 import Foundation
 
 class Function: TypeProtocol {
-    
     var expression: String
     var argument: String
+    
+    var syntaxValueType: String { return expression }
     
     required init(expression: String) throws {
         self.expression = expression

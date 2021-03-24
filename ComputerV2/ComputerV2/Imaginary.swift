@@ -8,11 +8,12 @@
 import Foundation
 
 class Imaginary: TypeProtocol {
-    
     var im: Rational
     var re: Rational
     
-    var valueType: String { return "\(re.fraction) \(im.fraction)i" }
+    var valueType: String { return String(format: "%g %g", re.rational, im.rational) }
+    
+    var syntaxValueType: String { return "\(re.syntaxValueType)\(im.syntaxValueType)i"}
     
     init() {
         self.im = Rational()

@@ -91,7 +91,8 @@ class Checker {
         }
         let lineWithoutDoubleAsterix = line.replace(string: "**", replacement: "@")
         for (i, c) in lineWithoutDoubleAsterix.enumerated() {
-            if c == "." || c == "," {
+            //if c == "." || c == "," {
+            if c == "." {
                 let charBefore = line[line.index(line.startIndex, offsetBy: i - 1)]
                 let charAfter = line[line.index(line.startIndex, offsetBy: i + 1)]
                 if !charBefore.isNumber || !charAfter.isNumber {
@@ -105,7 +106,7 @@ class Checker {
                 }
             } else if c == "[" && c != firstChar {
                 let charBefore = line[line.index(line.startIndex, offsetBy: i - 1)]
-                let charAfter = line[line.index(line.startIndex, offsetBy: i + 1)]//
+                let charAfter = line[line.index(line.startIndex, offsetBy: i + 1)]
                 if !"+-*;%/[(@".contains(charBefore) || !charAfter.isNumber && !"[+-".contains(charAfter) {
                     throw Exception(massage: "Error: \(charBefore)\(c)\(charAfter). Invalid syntax breckets.")
                 }
@@ -131,7 +132,8 @@ class Checker {
             if "+-^*/%.,@".contains(c) {
                 let charBefore = line[line.index(line.startIndex, offsetBy: i - 1)]
                 let charAfter = line[line.index(line.startIndex, offsetBy: i + 1)]
-                if "+-^*/%.,([@".contains(charBefore) && !"-+".contains(c) || "+-^*/%.,)]@".contains(charAfter){
+                if "+-^*/%.,([@".contains(charBefore) && !"-+".contains(c) || "+-^*/%.,)]@".contains(charAfter)
+                && "+-".contains(charAfter) && c != "," {
                     throw Exception(massage: "Error: \(charBefore)\(c)\(charAfter). Invalid syntax operators.")
                 }
             }

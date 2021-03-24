@@ -23,11 +23,52 @@ class Computer {
             var lineWithoutSpace = line.replace(string: "**", replacement: "@")
             lineWithoutSpace = lineWithoutSpace.removeWhitespace()
             if lineWithoutSpace.isEmpty { continue }
-            if lineWithoutSpace == "exit" { exit(0) }
+            if !keywordProcessing(line: lineWithoutSpace) { continue }
             if !checkErrors(line: lineWithoutSpace) { continue }
             if !workingLine(line: lineWithoutSpace) { continue }
-            //_ = conversionPostfixForm(infixFomr: lineWithoutSpace)
-            //print(lineWithoutSpace)
+        }
+    }
+    
+    // MARK: Обработка ключевых слов.
+    private func keywordProcessing(line: String) -> Bool {
+        switch line {
+        case "exit":
+            exit(0)
+        case "ls":
+            printVariables()
+            return false
+        default:
+            return true
+        }
+    }
+    
+    // MARK: Выводит на экран список переменных и функций
+    private func printVariables() {
+        if self.variables.isEmpty {
+            print("There are no variable.")
+            return
+        }
+        let variables = self.variables.filter{ !($0.value is Function) }
+        let functions = self.variables.filter{ $0.value is Function }
+        if !variables.isEmpty {
+            print("Variables:")
+            for variable in variables {
+                guard let valueType = variable.value?.valueType else { continue }
+                var separator = String()
+                if variable.value is Matrix {
+                    separator = "\n"
+                }
+                print("\(variable.name) = \(separator)\(valueType)")
+            }
+        }
+        if !functions.isEmpty {
+            print("Functions:")
+            for function in functions {
+                guard let functionType = function.value as? Function else { continue }
+                let valueType = functionType.valueType
+                let nameFunction = function.name.dropLast(1)
+                print("\(nameFunction)\(functionType.argument)) = \(valueType)")
+            }
         }
     }
     
@@ -48,36 +89,44 @@ class Computer {
     
     // MARK: Создание или обновление переменной и добавления в список переменных.
     private func addVariable(line: String) throws {
-        for v in self.variables {
-            print(v.name)
-        }
         let leftRight = line.split() { $0 == "=" }.map { String($0) }
         let nameVariable = leftRight.first!
         try checkValidName(name: nameVariable)
+        try checkExistingAgrumentFunction(name: nameVariable)
         let newVariable: Variable
-        // Поставить проврку на то является ли переменная функцией
         if isFunction(variable: nameVariable) {
             let nameFunction: String
             let argumentFunctions: String
             (nameFunction, argumentFunctions) = try splitNameArgumenrFunction(function: nameVariable)
             try checkArgumentFunction(argument: argumentFunctions)
-            // сделать проверку на то чтобы аргумент состоял только из букв!!!
-            newVariable = Variable(name: nameFunction + "()")
+            newVariable = Variable(name: "\(nameFunction)()")
             newVariable.value = Function(argument: argumentFunctions, expression: leftRight.last!)
         } else {
             newVariable = Variable(name: nameVariable)
-            let postfixForm = conversionPostfixForm(infixFomr: leftRight.last!)
-            newVariable.value = try calculateValue(postfixForm: postfixForm)
+            newVariable.value = try getCalculateValue(expression: leftRight.last!)
         }
         updateVariables(newVariable: newVariable)
         print(newVariable.value!.valueType)
-        //let temp = newVariable.value as! Rational
-        //print(temp.rational)
-        //a = [[23,23]]
-        
     }
     
-    // MARK: Проверяет аргумент на доступность. Имя аргумента не должно совпадать и именами переменных.
+    // MARK: Переводит выражение из инфиксной формы в постфиксную и возвращает объект R, I, M
+    private func getCalculateValue(expression: String) throws -> TypeProtocol {
+        let postfixForm = conversionPostfixForm(infixFomr: expression)
+        return try calculateValue(postfixForm: postfixForm)
+    }
+    
+    // MARK: Имя переменной не должно совпадать с именем аргумента любой функции.
+    private func checkExistingAgrumentFunction(name: String) throws {
+        for variable in self.variables {
+            if let function = variable.value as? Function {
+                if function.argument == name {
+                    throw Exception(massage: "Error: \(name) The variable name must not match the name of the fuction argument.")
+                }
+            }
+        }
+    }
+    
+    // MARK: Имя аргумента не должно совпадать и именами переменных, а так же цифр и операторов.
     private func checkArgumentFunction(argument: String) throws {
         for variable in self.variables {
             if variable.name == argument {
@@ -183,7 +232,6 @@ class Computer {
     func calculateValue(postfixForm: String) throws -> TypeProtocol {
         var stack = [TypeProtocol]()
         let elements = postfixForm.split() { $0 == " "}.map{ String($0) }
-        print(elements)
         for element in elements {
             if "*/^+-%@".contains(element) {
                 guard let secondValue = stack.popLast(), let firstValue = stack.popLast() else {
@@ -204,7 +252,7 @@ class Computer {
     
     // MARK: Создание нового элемента типа TypeProtocol для добавления в стек.
     private func createElementTypeProtocol(variable: String) throws -> TypeProtocol {
-        let type = getTypeVariable(variable: variable)
+        let type = try getTypeVariable(variable: variable)
         switch type {
         case .rational:
             return try Rational(expression: variable)
@@ -213,27 +261,35 @@ class Computer {
         case .matrix:
             return try Matrix(expression: variable)
         case .variable:
-            for existingVariable in self.variables {
-                if existingVariable.name == variable {
-                    guard let value =  existingVariable.value else {
-                        throw Exception(massage: "Invalig existing value.")
-                    }
-                    return value
-                }
-            }
+            return try getExistingVariable(variable: variable)
         case .function:
             let nameFunction: String
             let argumentFunctions: String
             (nameFunction, argumentFunctions) = try splitNameArgumenrFunction(function: variable)
-            let postfixForm = conversionPostfixForm(infixFomr: argumentFunctions)
-            let intermediateVatiable = try calculateValue(postfixForm: postfixForm)
-            // Получить значение аргумента. Оно должно быть Rational (не обязательно)
-            // Подставить полученное значение вместо переменной в функции. Вычислить его.
-            // Результат вычисления тоже должен быть Rational
+            let intermediateVatiable = try getCalculateValue(expression: argumentFunctions)
+            let syntaxValueType = "(\(intermediateVatiable.syntaxValueType))".removeWhitespace()
+            let postfixFormSyntaxVT = conversionPostfixForm(infixFomr: syntaxValueType)
+            let function = try getExistingVariable(variable: "\(nameFunction)()") as! Function
+            var postfisFormFunctionExpression = conversionPostfixForm(infixFomr: function.expression)
+            postfisFormFunctionExpression += " "
+            postfisFormFunctionExpression = postfisFormFunctionExpression.replace(string: "\(function.argument) ", replacement: "\(postfixFormSyntaxVT) ")
+            return try calculateValue(postfixForm: postfisFormFunctionExpression)
         default:
             throw Exception(massage: "Invalid value: \(variable)")
         }
-        return Rational()
+        //return Rational()
+    }
+    
+    private func getExistingVariable(variable: String) throws -> TypeProtocol {
+        for existingVariable in self.variables {
+            if existingVariable.name == variable {
+                guard let value =  existingVariable.value else {
+                    throw Exception(massage: "Invalig existing value.")
+                }
+                return value
+            }
+        }
+        return Rational(0)
     }
     
     // MARK: Разделяет имя функции и ее аргумент на две строки и возвращвет в виде кортежа.
@@ -253,8 +309,8 @@ class Computer {
         return (String(name), String(argument))
     }
     
-    // MARK: Определить тип: рациональное число, комплекское, матрица, существующая переменая, ошибка.
-    private func getTypeVariable(variable: String) -> TypeVariable {
+    // MARK: Определить тип: рациональное число, комплекское, матрица, существующая переменая/функция, ошибка.
+    private func getTypeVariable(variable: String) throws -> TypeVariable {
         if isRational(variable: variable) {
             return .rational
         }
@@ -264,8 +320,8 @@ class Computer {
         if isMatrix(variable: variable) {
             return .matrix
         }
-        if isExistingVariable(variable: variable) {
-            if  isFunction(variable: variable){
+        if try isExistingVariable(variable: variable) {
+            if isFunction(variable: variable){
                 return .function
             } else {
                 return .variable
@@ -289,12 +345,6 @@ class Computer {
         } else {
             return false
         }
-//        for c in variable {
-//            if !c.isNumber && c != "." {
-//                return false
-//            }
-//        }
-//        return true
     }
     
     // MARK: Определяет, является ли строка комплексным числом.
@@ -316,7 +366,12 @@ class Computer {
     }
     
     // MARK: Определяет, является ли строка существующей переменной.
-    private func isExistingVariable(variable: String) -> Bool {
+    private func isExistingVariable(variable: String) throws -> Bool {
+        var variable = variable
+        if isFunction(variable: variable){
+            let function = try splitNameArgumenrFunction(function: variable)
+            variable = "\(function.0)()"
+        }
         for existingVariable in self.variables {
             if existingVariable.name == variable {
                 return true

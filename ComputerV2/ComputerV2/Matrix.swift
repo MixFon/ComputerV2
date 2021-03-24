@@ -13,12 +13,11 @@ class Matrix: TypeProtocol {
     var colums: Int { return matrix.first?.count ?? 0}
     
     var valueType: String {
-        var result = String()
-        for row in self.matrix {
-            result.append("\(row)\n")
-        }
-        result.remove(at: result.index(before: result.endIndex))
-        return result
+        return getStringMatrix(separator: "\n")
+    }
+    
+    var syntaxValueType: String {
+        return "[" + getStringMatrix(separator: ";") + "]"
     }
 
     init() {
@@ -28,6 +27,15 @@ class Matrix: TypeProtocol {
     init(rows: Int, colums: Int) {
         self.matrix = Array(repeating: Array(repeating: Rational(), count: colums), count: rows)
         //var arr = Array(count: 3, repeatedValue: Array(count: 2, repeatedValue: 0))
+    }
+    
+    private func getStringMatrix(separator: String) -> String {
+        var result = String()
+        for row in self.matrix {
+            result.append("\(row)\(separator)")
+        }
+        result.remove(at: result.index(before: result.endIndex))
+        return result
     }
     
     // MARK: Коструктора преобразования матрицу в виде строки в матрицу рациональных чисел
@@ -174,7 +182,7 @@ extension Matrix {
     // MARK: Оператор умножения матрицы на матрицу. Матричное умножение.
     static func ** (left: Matrix, right: Matrix) throws -> Matrix {
         if left.colums != right.rows {
-            throw Exception(massage: "The matrices cannot be rearranged, since their dimensions do not match.")
+            throw Exception(massage: "The matrices cannot be multiplied because their sizes do not match.")
         }
         let result = Matrix(rows: left.rows, colums: right.colums)
         for i in 0..<result.rows{

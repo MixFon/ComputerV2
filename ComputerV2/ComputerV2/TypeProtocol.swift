@@ -10,6 +10,7 @@ import Foundation
 protocol TypeProtocol {
     init(expression: String) throws
     var valueType: String { get }
+    var syntaxValueType: String { get }
 }
 
 extension TypeProtocol {
@@ -186,13 +187,18 @@ func ** (left: TypeProtocol, right: TypeProtocol) throws -> TypeProtocol {
 
 func ^ (left: TypeProtocol, right: TypeProtocol) throws -> TypeProtocol {
     if right.type != .rational {
-        throw Exception(massage: "The degree must be a positive integer.")
+        throw Exception(massage: "The degree must be a positive integer or zero.")
     }
     let degree = right as! Rational
+    if degree == Rational(0) {
+        if left.type == .rational {
+            return Rational(1)
+        }
+    }
     var numerator, denuminator: Int
     (numerator, denuminator) = degree.getNumeratorDenuminator(degree.rational)
-    if numerator <= 0 {
-        throw Exception(massage: "The degree must not be negative or zero.")
+    if numerator < 0 {
+        throw Exception(massage: "The degree must not be negative.")
     }
     if denuminator != 1 {
         throw Exception(massage: "The degree is not an integer.")
