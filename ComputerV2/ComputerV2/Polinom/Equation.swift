@@ -8,13 +8,21 @@
 import Foundation
 
 class Equation {
-    var polindrom: Polindrom?
+    var polinom: Polinom?
     
-    init() {
-        let polindromString = gerArgumentCommandLine()
+    init(polindromString: String) {
         checkErrors(polingrom: polindromString)
-        polindrom = Polindrom(polindrom: polindromString)
-        guard let polindrom = self.polindrom else { return }
+        polinom = Polinom(polindrom: polindromString)
+        solveEquation()
+    }
+    
+    init(polinom: Polinom) {
+        self.polinom = polinom
+        solveEquation()
+    }
+    
+    private func solveEquation() {
+        guard let polindrom = self.polinom else { return }
         if polindrom.monoms.isEmpty {
             printOutput(massage: "Reduced form: 0=0")
             printOutput(massage: "Polynomial degree: 0")
@@ -46,7 +54,7 @@ class Equation {
     }
     
     private func solvingQuadraticEquations() {
-        guard let polindrom = self.polindrom else { return }
+        guard let polindrom = self.polinom else { return }
         if isZeroSolution() { return }
         let a: Double
         let b: Double
@@ -102,7 +110,7 @@ class Equation {
     }
     
     private func isZeroSolution() -> Bool {
-        guard let polindrom = self.polindrom else { return false }
+        guard let polindrom = self.polinom else { return false }
         if polindrom.monoms.count == 1 {
             printOutput(massage: "The solution is:")
             printOutput(massage: "0")
@@ -112,7 +120,7 @@ class Equation {
     }
     
     private func solutionLinearEqaution() {
-        guard let polindrom = self.polindrom else { return }
+        guard let polindrom = self.polinom else { return }
         if isZeroSolution() { return }
         let b = polindrom.monoms[1].coefficient
         let k = polindrom.monoms[0].coefficient
@@ -180,7 +188,7 @@ class Equation {
     }
     
     private func printInfo() {
-        guard let polindrom = self.polindrom else { return }
+        guard let polindrom = self.polinom else { return }
         printOutput(massage: "Reduced form: \(polindrom.getReducedForm())=0")
         printOutput(massage: "Polynomial degree: \(polindrom.getPolynominalDegree())")
     }
@@ -237,7 +245,7 @@ class Equation {
     }
     
     private func checkMultyX(polindrom: String) -> Bool {
-        let polinomsLiftRight = Polindrom.getLeftRightPolinoms(polindrom: polindrom)
+        let polinomsLiftRight = Polinom.getLeftRightPolinoms(polindrom: polindrom)
         let monoms = polinomsLiftRight.0 + polinomsLiftRight.1
         for monom in monoms {
             if monom.count == 1 {

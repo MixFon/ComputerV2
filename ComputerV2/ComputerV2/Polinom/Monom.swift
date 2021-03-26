@@ -127,3 +127,16 @@ class Monom: NSObject {
         }
     }
 }
+
+extension Monom {
+    
+    // MARK: Перемножение двух мономов.
+    static func * (left: Monom, right: Monom) -> Monom {
+        return Monom(coefficient: left.coefficient * right.coefficient, degree: left.degree + right.degree)
+    }
+    
+    // MARK: Перемена знака.
+    static prefix func - (monom: Monom) -> Monom {
+        return Monom(coefficient: -monom.coefficient, degree: monom.degree)
+    }
+}

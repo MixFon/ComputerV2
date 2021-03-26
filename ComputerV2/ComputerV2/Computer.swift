@@ -113,10 +113,84 @@ class Computer {
             throw Exception(massage: "Error in solving the equation.")
         }
         let rightValue = try getCalculateValue(expression: leftRight.last!)
-        if !(rightValue is Rational) {
+        guard let rational = rightValue as? Rational else {
             throw Exception(massage: "Error: \(leftRight.last!). The expression on the right must be a rational number.")
         }
-        
+        let nameFunction: String
+        let argumentFunctions: String
+        (nameFunction, argumentFunctions) = try splitNameArgumenrFunction(function: leftRight.first!)
+        guard let function = try getExistingVariable(variable: "\(nameFunction)()") as? Function else {
+            throw Exception(massage: "Error: \(nameFunction)() function does not exist.")
+        }
+        if function.argument != argumentFunctions {
+            throw Exception(massage: "Error \(argumentFunctions). Invalid function argument.")
+        }
+        let polinom = try getCalculatePolinom(expression: function.expression, argument: argumentFunctions)
+        polinom.addMonom(monom: Monom(coefficient: -rational.rational, degree: 0))
+        _ = Equation(polinom: polinom)
+    }
+    
+    // MARK: Приведение полинома к стандартному виду. ax^2+bx+c
+    private func getCalculatePolinom(expression: String, argument: String) throws -> Polinom {
+        let postfixForm = conversionPostfixForm(infixFomr: expression)
+        let polinom = try calculatePolinom(postfixForm: postfixForm, argument: argument)
+        print(polinom.getReducedForm())
+        return polinom
+    }
+    
+    // MARK: Проведение операций над полиномом.
+    func calculatePolinom(postfixForm: String, argument: String) throws -> Polinom {
+        var stack = [Polinom]()
+        let elements = postfixForm.split() { $0 == " "}.map{ String($0) }
+        for element in elements {
+            switch element {
+            case "+":
+                guard let secondValue = stack.popLast(), let firstValue = stack.popLast() else {
+                    throw Exception(massage: "Invalid operand polinom: \(element)")
+                }
+                stack.append(firstValue + secondValue)
+            case "-":
+                guard let secondValue = stack.popLast(), let firstValue = stack.popLast() else {
+                    throw Exception(massage: "Invalid operand polinom: \(element)")
+                }
+                stack.append(firstValue - secondValue)
+            case "*":
+                guard let secondValue = stack.popLast(), let firstValue = stack.popLast() else {
+                    throw Exception(massage: "Invalid operand polinom: \(element)")
+                }
+                stack.append(firstValue * secondValue)
+            case "^":
+                guard let secondValue = stack.popLast(), let firstValue = stack.popLast() else {
+                    throw Exception(massage: "Invalid operand polinom: \(element)")
+                }
+                stack.append(try firstValue ^ secondValue)
+            default:
+                if element == argument {
+                    let polinom = Polinom(monom: Monom(monom: "X"))
+                    stack.append(polinom)
+                    break
+                }
+                let newValue = try createElementTypeProtocol(variable: element)
+                guard let rational = newValue as? Rational else {
+                   throw Exception(massage: "Error \(element). The expression must be of a rational type.")
+                }
+                let polinom = Polinom(monom: Monom(coefficient: rational.rational, degree: 0))
+                stack.append(polinom)
+            }
+        }
+        //printStack(stack: stack)
+        guard let last = stack.popLast() else {
+            throw Exception(massage: "Invalid operand.")
+        }
+        return last
+    }
+    
+    
+    private func printStack(stack: [Polinom]) {
+        for elem in stack {
+            print(elem.monoms, terminator: " ")
+        }
+        print()
     }
     
     // MARK: Создание или обновление переменной и добавления в список переменных.
