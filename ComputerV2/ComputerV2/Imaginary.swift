@@ -11,7 +11,7 @@ class Imaginary: TypeProtocol {
     var im: Rational
     var re: Rational
     
-    var valueType: String { return String(format: "%g %g", re.rational, im.rational) }
+    var valueType: String { return String(format: "%g%+gi", re.rational, im.rational) }
     
     var syntaxValueType: String { return "\(re.syntaxValueType)\(im.syntaxValueType)i"}
     

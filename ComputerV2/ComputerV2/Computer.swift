@@ -76,7 +76,7 @@ class Computer {
     private func workingLine(line: String) -> Bool {
         do {
             if line.contains("?") {
-                
+                try computation(line: line)
             } else {
                 try addVariable(line: line)
             }
@@ -85,6 +85,38 @@ class Computer {
             return false
         } catch {}
         return true
+    }
+    
+    // MARK: Вычисление значения переменных или решение уравнений.
+    private func computation(line: String) throws {
+        if line.last != "?" {
+            throw Exception(massage: "The question mark character must be at the end of the line.")
+        }
+        let line = line.dropLast(1)
+        let leftRight = line.split() { $0 == "=" }.map { String($0) }
+        if leftRight.count == 1 {
+            try computationVariable(expression: leftRight.first!)
+        } else {
+            try solveEquation(leftRight: leftRight)
+        }
+    }
+    
+    // MARK: Вычисление значения выражения {variable}=?. Вывод на экран без создания новой перемнной.
+    private func computationVariable(expression: String) throws {
+        let value = try getCalculateValue(expression: expression)
+        print(value.valueType)
+    }
+    
+    // MARK: Решить уравнение. {function(value)} = {rationalValue} ?
+    private func solveEquation(leftRight: [String]) throws {
+        if leftRight.count != 2 {
+            throw Exception(massage: "Error in solving the equation.")
+        }
+        let rightValue = try getCalculateValue(expression: leftRight.last!)
+        if !(rightValue is Rational) {
+            throw Exception(massage: "Error: \(leftRight.last!). The expression on the right must be a rational number.")
+        }
+        
     }
     
     // MARK: Создание или обновление переменной и добавления в список переменных.
@@ -443,7 +475,7 @@ extension String {
             }
             if "+-".contains(char) && prev == "(" {
                 string += " \(char)"
-            } else if "+-*/%()^@".contains(char) && coutnSquareBreckets == 0 && countFunction == 0 {
+            } else if "+-*/%()^@?".contains(char) && coutnSquareBreckets == 0 && countFunction == 0 {
                 string += " \(char) "
             } else {
                 string += String(char)

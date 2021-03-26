@@ -16,6 +16,9 @@
 		291CEA2A25F5F35C002FD367 /* Imaginary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291CEA2225F5EEA0002FD367 /* Imaginary.swift */; };
 		291D97B125F0B928006E1B8D /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291D97B025F0B928006E1B8D /* main.swift */; };
 		291D97B925F10107006E1B8D /* Computer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291D97B825F10107006E1B8D /* Computer.swift */; };
+		2942EE7E260DE80600C4882C /* Monom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2942EE7B260DE80600C4882C /* Monom.swift */; };
+		2942EE7F260DE80600C4882C /* Polindrom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2942EE7C260DE80600C4882C /* Polindrom.swift */; };
+		2942EE80260DE80600C4882C /* Equation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2942EE7D260DE80600C4882C /* Equation.swift */; };
 		294561BA26048E7B0008CB89 /* Function.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294561B926048E7B0008CB89 /* Function.swift */; };
 		294561BB26048E7B0008CB89 /* Function.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294561B926048E7B0008CB89 /* Function.swift */; };
 		2971869A25F9F9660020E2DD /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2971869925F9F9660020E2DD /* Matrix.swift */; };
@@ -55,6 +58,9 @@
 		291D97AD25F0B928006E1B8D /* ComputerV2 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ComputerV2; sourceTree = BUILT_PRODUCTS_DIR; };
 		291D97B025F0B928006E1B8D /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		291D97B825F10107006E1B8D /* Computer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Computer.swift; sourceTree = "<group>"; };
+		2942EE7B260DE80600C4882C /* Monom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Monom.swift; sourceTree = "<group>"; };
+		2942EE7C260DE80600C4882C /* Polindrom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Polindrom.swift; sourceTree = "<group>"; };
+		2942EE7D260DE80600C4882C /* Equation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Equation.swift; sourceTree = "<group>"; };
 		294561B926048E7B0008CB89 /* Function.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Function.swift; sourceTree = "<group>"; };
 		2971869925F9F9660020E2DD /* Matrix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matrix.swift; sourceTree = "<group>"; };
 		2971869D25FA06950020E2DD /* TestsChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsChecker.swift; sourceTree = "<group>"; };
@@ -107,6 +113,7 @@
 		291D97AF25F0B928006E1B8D /* ComputerV2 */ = {
 			isa = PBXGroup;
 			children = (
+				2942EE7A260DE6F300C4882C /* Polinom */,
 				291D97B025F0B928006E1B8D /* main.swift */,
 				291D97B825F10107006E1B8D /* Computer.swift */,
 				29198BDB25F131B500990FF4 /* Checker.swift */,
@@ -119,6 +126,16 @@
 				294561B926048E7B0008CB89 /* Function.swift */,
 			);
 			path = ComputerV2;
+			sourceTree = "<group>";
+		};
+		2942EE7A260DE6F300C4882C /* Polinom */ = {
+			isa = PBXGroup;
+			children = (
+				2942EE7D260DE80600C4882C /* Equation.swift */,
+				2942EE7B260DE80600C4882C /* Monom.swift */,
+				2942EE7C260DE80600C4882C /* Polindrom.swift */,
+			);
+			path = Polinom;
 			sourceTree = "<group>";
 		};
 		29A2022B25F2980D0071FA45 /* TestsComputerV2 */ = {
@@ -223,11 +240,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2942EE80260DE80600C4882C /* Equation.swift in Sources */,
+				2942EE7E260DE80600C4882C /* Monom.swift in Sources */,
 				291CEA2325F5EEA0002FD367 /* Imaginary.swift in Sources */,
 				29DE6ED725FFD16600A67C5E /* TypeProtocol.swift in Sources */,
 				29DE6ED325FFD0B500A67C5E /* Variable.swift in Sources */,
 				291D97B925F10107006E1B8D /* Computer.swift in Sources */,
 				2971869A25F9F9660020E2DD /* Matrix.swift in Sources */,
+				2942EE7F260DE80600C4882C /* Polindrom.swift in Sources */,
 				29198BDC25F131B500990FF4 /* Checker.swift in Sources */,
 				291D97B125F0B928006E1B8D /* main.swift in Sources */,
 				29D5D7C72602240700063504 /* Enums.swift in Sources */,

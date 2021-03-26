@@ -91,6 +91,9 @@ class Checker {
         }
         let lineWithoutDoubleAsterix = line.replace(string: "**", replacement: "@")
         for (i, c) in lineWithoutDoubleAsterix.enumerated() {
+            if "-+".contains(c) && c == firstChar {
+                continue
+            }
             //if c == "." || c == "," {
             if c == "." {
                 let charBefore = line[line.index(line.startIndex, offsetBy: i - 1)]
