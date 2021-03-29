@@ -50,7 +50,6 @@ class Checker {
     func checkLeftRightExpression(leftRigth: [String]) throws {
         try checkCountExpression(leftRight: leftRigth)
         try checkNameValue(left: leftRigth.first!)
-        //try checkQuestionMark(right: leftRigth.last!)
     }
     
     private func checkCountExpression(leftRight: [String]) throws {
@@ -68,13 +67,6 @@ class Checker {
             throw Exception(massage: "Invalid syntax question mark.")
         }
     }
-    
-    // MARK: Проверка знака вопроса в конце строки.
-//    func checkQuestionMark(right: String) throws {
-//        if right.contains("?") && right.count != 1 {
-//            throw Exception(massage: "Invalid syntax question mark.")
-//        }
-//    }
     
     // MARK: Проверка синтаксиса строки
     public func checkLine(line: String) throws {
@@ -94,7 +86,6 @@ class Checker {
             if "-+".contains(c) && c == firstChar {
                 continue
             }
-            //if c == "." || c == "," {
             if c == "." {
                 let charBefore = line[line.index(line.startIndex, offsetBy: i - 1)]
                 let charAfter = line[line.index(line.startIndex, offsetBy: i + 1)]
@@ -142,13 +133,4 @@ class Checker {
             }
         }
     }
-    
-//    public func checkExtraneousCharacters(cheking: String, source: String) -> Bool {
-//        for c in cheking {
-//            if !source.contains(c) {
-//                return false
-//            }
-//        }
-//        return true
-//    }
 }

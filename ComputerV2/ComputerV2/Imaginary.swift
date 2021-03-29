@@ -79,7 +79,7 @@ extension Imaginary {
     }
     
     static func * (left: Imaginary, right: Rational) -> Imaginary {
-        let imaginary = left.re * right
+        let imaginary = left.im * right
         let rational = left.re * right
         return Imaginary(imaginary: imaginary, rational: rational)
     }

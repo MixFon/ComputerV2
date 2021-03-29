@@ -65,9 +65,9 @@ class Computer {
         print("functionName(functionVariable) = expression ?")
         print()
         print("Keywords:")
-        print("ls \t\t\t Print list variables.")
+        print("ls \t\t Print list variables.")
         print("help(-h) \t Print help.")
-        print("fraction(-f) Displaying numbers as fractions.")
+        print("fraction(-f) \t Displaying numbers as fractions.")
         print("exit \t\t Exit the program.")
     }
     
@@ -140,7 +140,6 @@ class Computer {
     private func computationVariable(expression: String) throws {
         let value = try getCalculateValue(expression: expression)
         try printVariableValue(value: value)
-        //print(value.valueType)
     }
     
     // MARK: Решить уравнение. {function(value)} = {rationalValue} ?
@@ -241,7 +240,6 @@ class Computer {
         }
         updateVariables(newVariable: newVariable)
         try printVariableValue(value: newVariable.value)
-        //print(newVariable.value!.valueType)
     }
     
     // MARK: Печатает значение переменной. В дробной или обычной форме.
@@ -314,7 +312,6 @@ class Computer {
         if "+-".contains(infixFomr.first!) {
             lineSpace = ["0"] + lineSpace
         }
-        //print(addSpace(line: line))
         let prioritySign = ["(": 0, ")": 1, "+": 2, "-": 2, "*": 3, "@": 3, "/": 3, "%": 3, "^": 4]
         var postfixForm: String = String()
         var stack: String = String()
@@ -424,7 +421,6 @@ class Computer {
         default:
             throw Exception(massage: "Invalid value: \(variable)")
         }
-        //return Rational()
     }
     
     private func getExistingVariable(variable: String) throws -> TypeProtocol {

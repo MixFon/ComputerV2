@@ -26,11 +26,12 @@ class Matrix: TypeProtocol {
         self.matrix = [[Rational]]()
     }
     
+    // MARK: Коструктор создает заданное количество строк и столбцов матрицы и иницализирует нулями.
     init(rows: Int, colums: Int) {
         self.matrix = Array(repeating: Array(repeating: Rational(), count: colums), count: rows)
-        //var arr = Array(count: 3, repeatedValue: Array(count: 2, repeatedValue: 0))
     }
     
+    // MARK: Формирует строку на основе матрицы.
     private func getStringMatrix(separator: String) -> String {
         var result = String()
         for row in self.matrix {
@@ -92,6 +93,7 @@ class Matrix: TypeProtocol {
     
 }
 
+// MARK: Создание нового оператора.
 infix operator ** : MultiplicationPrecedence
 
 extension Matrix {
@@ -193,7 +195,6 @@ extension Matrix {
                 result.matrix[i][j] = temp
             }
         }
-        print(result.printMatrix())
         return result
     }
     

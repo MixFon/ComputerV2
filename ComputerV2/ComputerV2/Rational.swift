@@ -11,7 +11,6 @@ class Rational: NSObject, TypeProtocol {
     var rational: Double
     
     var valueType: String { return String(format: "%g", self.rational) }
-    //var valueType: String { return "\(self.fraction)" }
     
     var syntaxValueType: String { return String(format: "%+g", self.rational)}
     
@@ -121,13 +120,6 @@ extension Rational {
         }
         return Rational(left.rational / right.rational)
     }
-    
-//   static func % (left: Rational, right: Rational) throws -> Rational {
-//        if right.rational == 0 {
-//            throw Exception(massage: "Division by zero.")
-//        }
-//        return Rational(left.rational.truncatingRemainder(dividingBy: right.rational))
-//    }
 
     static func % (left: Rational, right: Rational) throws -> Rational {
         if right.rational == 0 {
@@ -156,12 +148,7 @@ extension Rational {
             rationalValue = rationalValue * rational
         }
         return rationalValue
-        //return Rational(pow(number.rational, power.rational))
     }
-
-//    static func ^ (number: Rational, power: Double) -> Rational {
-//        return Rational(pow(number.rational, power))
-//    }
 
     static func == (left: Rational, right: Rational) -> Bool {
         return left.rational == right.rational
@@ -174,8 +161,4 @@ extension Rational {
     static func != (left: Rational, right: Rational) -> Bool {
         return !(left == right)
     }
-}
-
-func sqrt(rational: Rational) -> Rational {
-    return Rational(sqrt(rational.rational))
 }
