@@ -13,6 +13,8 @@ class Function: TypeProtocol {
     
     var syntaxValueType: String { return expression }
     
+    var fraction: String { return expression }
+    
     required init(expression: String) throws {
         self.expression = expression
         self.argument = String()

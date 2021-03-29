@@ -19,6 +19,8 @@ class Matrix: TypeProtocol {
     var syntaxValueType: String {
         return "[" + getStringMatrix(separator: ";") + "]"
     }
+    
+    var fraction: String { return self.syntaxValueType }
 
     init() {
         self.matrix = [[Rational]]()

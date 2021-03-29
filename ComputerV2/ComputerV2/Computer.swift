@@ -11,6 +11,8 @@ class Computer {
     
     var variables: [Variable]
     
+    var fraction = false
+    
     init() {
         variables = [Variable]()
     }
@@ -37,9 +39,36 @@ class Computer {
         case "ls":
             printVariables()
             return false
+        case "help", "-h":
+            printHelp()
+            return false
+        case "fraction", "-f":
+            self.fraction = !(self.fraction)
+            return false
         default:
             return true
         }
+    }
+    
+    // MARK: Вывести подсказку.
+    private func printHelp() {
+        print("Syntax:")
+        print("variableName = value")
+        print("Types: Rational, Imaginary, Matrix, Functiona.")
+        print("Matrix: MxN")
+        print("[[A0,A1,A2,...,An];[B0,B1,B2,...,Bn];...;[M0,M1,M2,...,Mn]]")
+        print("Function:")
+        print("functionName(functionVariable) = expression")
+        print("Calculating the value:")
+        print("expression = ?")
+        print("Solution of the equation.")
+        print("functionName(functionVariable) = expression ?")
+        print()
+        print("Keywords:")
+        print("ls \t\t\t Print list variables.")
+        print("help(-h) \t Print help.")
+        print("fraction(-f) Displaying numbers as fractions.")
+        print("exit \t\t Exit the program.")
     }
     
     // MARK: Выводит на экран список переменных и функций
@@ -53,7 +82,13 @@ class Computer {
         if !variables.isEmpty {
             print("Variables:")
             for variable in variables {
-                guard let valueType = variable.value?.valueType else { continue }
+                guard let value = variable.value else { continue }
+                let valueType: String
+                if self.fraction {
+                    valueType = value.fraction
+                } else {
+                    valueType = value.valueType
+                }
                 var separator = String()
                 if variable.value is Matrix {
                     separator = "\n"
@@ -104,7 +139,8 @@ class Computer {
     // MARK: Вычисление значения выражения {variable}=?. Вывод на экран без создания новой перемнной.
     private func computationVariable(expression: String) throws {
         let value = try getCalculateValue(expression: expression)
-        print(value.valueType)
+        try printVariableValue(value: value)
+        //print(value.valueType)
     }
     
     // MARK: Решить уравнение. {function(value)} = {rationalValue} ?
@@ -178,20 +214,12 @@ class Computer {
                 stack.append(polinom)
             }
         }
-        //printStack(stack: stack)
         guard let last = stack.popLast() else {
-            throw Exception(massage: "Invalid operand.")
+            throw Exception(massage: "Invalid operand expression.")
         }
         return last
     }
     
-    
-    private func printStack(stack: [Polinom]) {
-        for elem in stack {
-            print(elem.monoms, terminator: " ")
-        }
-        print()
-    }
     
     // MARK: Создание или обновление переменной и добавления в список переменных.
     private func addVariable(line: String) throws {
@@ -212,7 +240,20 @@ class Computer {
             newVariable.value = try getCalculateValue(expression: leftRight.last!)
         }
         updateVariables(newVariable: newVariable)
-        print(newVariable.value!.valueType)
+        try printVariableValue(value: newVariable.value)
+        //print(newVariable.value!.valueType)
+    }
+    
+    // MARK: Печатает значение переменной. В дробной или обычной форме.
+    private func printVariableValue(value: TypeProtocol?) throws {
+        guard let value = value else {
+            throw Exception(massage: "Invalid print value.")
+        }
+        if self.fraction {
+            print(value.fraction)
+        } else {
+            print(value.valueType)
+        }
     }
     
     // MARK: Переводит выражение из инфиксной формы в постфиксную и возвращает объект R, I, M
@@ -507,60 +548,5 @@ class Computer {
     // MARK: Вывод сообщения об ошибке в поток ошибок.
     private func systemError(massage: String) {
         fputs(massage + "\n", stderr)
-    }
-}
-
-extension String {
-    func replace(string: String, replacement: String) -> String {
-        return self.replacingOccurrences(of: string, with: replacement, options: NSString.CompareOptions.literal, range: nil)
-    }
-
-    func removeWhitespace() -> String {
-        return self.replace(string: " ", replacement: "")
-    }
-    
-    // MARK: Добавляет пробелы слева и справа от +-*/%()^@
-    func addSpace() -> String {
-        let line = self
-        var string = String()
-        var coutnSquareBreckets = 0
-        var countRoundBrackes = 0
-        var countFunction = 0
-        var prev: Character = "("
-        for char in line {
-            if char == "[" {
-                coutnSquareBreckets += 1
-            } else if char == "]" {
-                coutnSquareBreckets -= 1
-            }
-            if char == "(" && prev.isLetter {
-                countFunction += 1
-            } else if char == ")" && countRoundBrackes == 0 && countFunction != 0 {
-                countFunction -= 1
-                if countFunction == 0 {
-                    string += String(char)
-                    prev = char
-                    continue
-                }
-            } else if char == "(" && countFunction != 0 {
-                countRoundBrackes += 1
-            } else if char == ")" && countFunction != 0 {
-                countRoundBrackes -= 1
-            }
-            if "+-".contains(char) && prev == "(" {
-                string += " \(char)"
-            } else if "+-*/%()^@?".contains(char) && coutnSquareBreckets == 0 && countFunction == 0 {
-                string += " \(char) "
-            } else {
-                string += String(char)
-            }
-            prev = Character(extendedGraphemeClusterLiteral: char)
-        }
-        return string
-    }
-    
-    // MARK: Разделяет строку на слова по пробелам и возвращает массив слов
-    func getWords() -> [String] {
-        return self.split() { $0 == " " }.map{ String($0) }
     }
 }

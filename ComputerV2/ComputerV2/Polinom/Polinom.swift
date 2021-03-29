@@ -164,7 +164,7 @@ extension Polinom {
         guard let degree = right.monoms.first?.coefficient else {
             throw Exception(massage: error)
         }
-        let numDen = Rational().getNumeratorDenuminator(degree)
+        let numDen = try Rational().getNumeratorDenuminator(degree)
         if numDen.1 != 1 {
             throw Exception(massage: error)
         }

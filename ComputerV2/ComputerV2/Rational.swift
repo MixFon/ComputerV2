@@ -16,7 +16,9 @@ class Rational: NSObject, TypeProtocol {
     var syntaxValueType: String { return String(format: "%+g", self.rational)}
     
     var fraction: String {
-        let fraction = getNumeratorDenuminator(self.rational)
+        guard let fraction = try? getNumeratorDenuminator(self.rational) else {
+            return valueType
+        }
         return "\(fraction.0)/\(fraction.1)"
     }
     
@@ -24,7 +26,7 @@ class Rational: NSObject, TypeProtocol {
         self.rational = 0
     }
     
-    override var description: String {return "\(rational)"}
+    override var description: String { return self.valueType }
     
     // MARK: Конструктор создания нового значения из строки
     required init(expression: String) throws {
@@ -48,14 +50,20 @@ class Rational: NSObject, TypeProtocol {
     }
     
     // MARK: Возвращает число в виде дроби с числителем и знаменателем
-     func getNumeratorDenuminator(_ doubleValue: Double, withPrecision eps: Double = 1.0E-10) -> (Int, Int) {
+     func getNumeratorDenuminator(_ doubleValue: Double, withPrecision eps: Double = 1.0E-10) throws->(Int, Int) {
         var x = doubleValue
         var a = x.rounded(.down)
-        var (h1, k1, h, k) = (1, 0, Int(a), 1)
+        guard var h = a.toInt() else {
+            throw Exception(massage: "A number cannot be represented as a numerator and denominator.")
+        }
+        var (h1, k1, k) = (1, 0, 1)
         while x - a > eps * Double(k) * Double(k) {
             x = 1.0/(x - a)
             a = x.rounded(.down)
-            (h1, k1, h, k) = (h, k, h1 + Int(a) * h, k1 + Int(a) * k)
+            guard let intA = a.toInt() else {
+                throw Exception(massage: "A number cannot be represented as a numerator and denominator.")
+            }
+            (h1, k1, h, k) = (h, k, h1 + intA * h, k1 + intA * k)
         }
         (h, k) = reduceFraction(numerator: h, denominator: k)
         return (h, k)
@@ -136,7 +144,7 @@ extension Rational {
         }
         var numerator: Int
         var denominator: Int
-        (numerator, denominator) = power.getNumeratorDenuminator(power.rational)
+        (numerator, denominator) = try power.getNumeratorDenuminator(power.rational)
         if numerator < 0 {
             throw Exception(massage: "The degree must not be negative.")
         }

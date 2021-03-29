@@ -11,6 +11,7 @@ protocol TypeProtocol {
     init(expression: String) throws
     var valueType: String { get }
     var syntaxValueType: String { get }
+    var fraction: String { get }
 }
 
 extension TypeProtocol {
@@ -196,7 +197,7 @@ func ^ (left: TypeProtocol, right: TypeProtocol) throws -> TypeProtocol {
         }
     }
     var numerator, denuminator: Int
-    (numerator, denuminator) = degree.getNumeratorDenuminator(degree.rational)
+    (numerator, denuminator) = try degree.getNumeratorDenuminator(degree.rational)
     if numerator < 0 {
         throw Exception(massage: "The degree must not be negative.")
     }

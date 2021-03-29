@@ -15,6 +15,8 @@ class Imaginary: TypeProtocol {
     
     var syntaxValueType: String { return "\(re.syntaxValueType)\(im.syntaxValueType)i"}
     
+    var fraction: String { return "\(re.fraction)\(im.fraction)i"}
+    
     init() {
         self.im = Rational()
         self.re = Rational()
@@ -94,7 +96,7 @@ extension Imaginary {
     static func ^ (imaginary: Imaginary, power: Rational) throws -> Imaginary {
         var numerator: Int
         var denominator: Int
-        (numerator, denominator) = power.getNumeratorDenuminator(power.rational)
+        (numerator, denominator) = try power.getNumeratorDenuminator(power.rational)
         if numerator <= 0 {
             throw Exception(massage: "The degree must not be negative or zero.")
         }
