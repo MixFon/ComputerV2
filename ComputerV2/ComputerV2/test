@@ -1,0 +1,17 @@
+funA(x) = x^2 + 2*x + 1
+funA(x) = 0 ?
+varA = 2
+varB= 2 * (4 + varA + 3)
+varC =2 * varB
+varD = 2 *(2 + 4 *varC -4 /3)
+matA = [[1,2];[3,2];[3,4]]
+matB= [[1,2]]
+funA(b) = 2*b+b 2*b+b
+funB(a) =2 * a 2*a
+funC(y) =2* y + 4 -2 * 4+1/3 2 * y + 4 - 8 + 0.333333
+funD(x) = 2 *x 2*x
+-h
+ls
+-f
+ls
+exit
