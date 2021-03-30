@@ -163,3 +163,9 @@
     > Discriminant is strictly positive, the two solutions are:
     > -1.90587
     > 0.655869
+    > ls
+    > Functions:
+    > f(x) = (x^2+3*x)^2
+    > r(x) = x^2-5x+4
+    > g(x) = (4.4*x^3-2*5.5*x^2+3*x-3)*(7.5*x^2-6/4*x+10%3)
+    > c(x) = 4*x^2+5*x-5
