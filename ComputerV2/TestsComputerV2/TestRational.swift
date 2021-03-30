@@ -175,16 +175,4 @@ class TestRational: XCTestCase {
         print(three!)
         XCTAssert(three!.rational == 231991348.966712)
     }
-    
-    func testSqrt() throws {
-        var one = Rational(4)
-        XCTAssert(sqrt(rational: one).rational == 2)
-        
-        one = Rational(16.25)
-        XCTAssert(sqrt(rational: one).rational == 4.0311288741492748)
-        
-        one = Rational(-16.25)
-        print(sqrt(rational: one))
-        XCTAssert(sqrt(rational: one).rational.isNaN)
-    }
 }

@@ -12,6 +12,9 @@
 		290DBA5C25F4A69D00BD009A /* Rational.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290DBA5425F4A36600BD009A /* Rational.swift */; };
 		2915250B2611E2E800B20D07 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2915250A2611E2E800B20D07 /* Extension.swift */; };
 		2915250C2611E2E800B20D07 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2915250A2611E2E800B20D07 /* Extension.swift */; };
+		2915250F2612329A00B20D07 /* Equation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2942EE7D260DE80600C4882C /* Equation.swift */; };
+		291525102612329A00B20D07 /* Monom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2942EE7B260DE80600C4882C /* Monom.swift */; };
+		291525112612329A00B20D07 /* Polinom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2942EE7C260DE80600C4882C /* Polinom.swift */; };
 		29198BDC25F131B500990FF4 /* Checker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29198BDB25F131B500990FF4 /* Checker.swift */; };
 		291CEA2325F5EEA0002FD367 /* Imaginary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291CEA2225F5EEA0002FD367 /* Imaginary.swift */; };
 		291CEA2725F5F313002FD367 /* TestsImaginary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291CEA2625F5F313002FD367 /* TestsImaginary.swift */; };
@@ -265,6 +268,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2915250F2612329A00B20D07 /* Equation.swift in Sources */,
+				291525102612329A00B20D07 /* Monom.swift in Sources */,
+				291525112612329A00B20D07 /* Polinom.swift in Sources */,
 				29EA8CB6260260CD0042796A /* Enums.swift in Sources */,
 				29DE6EE425FFD75900A67C5E /* Variable.swift in Sources */,
 				29DE6EE525FFD75900A67C5E /* TypeProtocol.swift in Sources */,
